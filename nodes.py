@@ -10,7 +10,7 @@ from modules.processing import (
 from .utils import batch_tensor_to_pil, batched_pil_to_tensor, tensor_to_pil
 
 
-class FaceFusion:
+class WD_FaceFusion:
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -21,9 +21,9 @@ class FaceFusion:
                 "face_detector_score": ("FLOAT", {"default": 0.65, "min": 0, "max": 1, "step": 0.02}),
                 # Face detector score
                 "mask_blur": ("FLOAT", {"default": 0.7, "min": 0, "max": 1, "step": 0.05}),  # Face mask blur
-                "landmarker_score": ("FLOAT", {"default": 0.5, "min": 0, "max": 1, "step": 0.05})
+                "landmarker_score": ("FLOAT", {"default": 0.5, "min": 0, "max": 1, "step": 0.05}),
                 # Face landmarker score
-                "face_enhance_blend": ("FLOAT", {"default": 0.3, "min": 0, "max": 1, "step": 0.01}),
+                "face_enhance_blend": ("FLOAT", {"default": 30, "min": 0, "max": 100, "step": 1}),
             }
         }
 
@@ -49,9 +49,9 @@ class FaceFusion:
 
 
 NODE_CLASS_MAPPINGS = {
-    "FaceFusion": FaceFusion,
+    "WD_FaceFusion": WD_FaceFusion,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "FaceFusion": "FaceFusion",
+    "WD_FaceFusion": "WD_FaceFusion",
 }

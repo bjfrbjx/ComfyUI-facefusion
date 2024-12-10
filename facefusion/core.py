@@ -451,7 +451,7 @@ def run(source_path, target_path:str, output_path, provider="cpu", detector_scor
 	#apply_args(step_args, state_manager.set_item)
 	the_processors=['face_swapper',]
 	if face_enhance_blend>0.:
-		the_processors.append('face_enhance')
+		the_processors.append('face_enhancer')
 	apply_state_item=state_manager.set_item
 	apply_state_item('processors',the_processors)
 	apply_state_item('face_detector_angles', [0])
