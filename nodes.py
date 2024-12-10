@@ -1,4 +1,9 @@
-from scripts.facefusion_swap import FaceFusionScript
+import urllib.request
+opener = urllib.request.build_opener()
+opener.addheaders = [('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1941.0 Safari/537.36'),('Connection', 'keep-alive')]
+urllib.request.install_opener(opener)
+
+from face_scripts.facefusion_swap import FaceFusionScript
 from modules.processing import (
     StableDiffusionProcessingImg2Img
 )
@@ -12,14 +17,13 @@ class FaceFusion:
             "required": {
                 "image": ("IMAGE",),
                 "single_source_image": ("IMAGE",),  # Single source image
-                "enable": ("BOOLEAN", {"default": False}),  # Enable processing
-                "skip_nsfw": ("BOOLEAN", {"default": True}),  # Skip NSFW check
                 "device": (["cpu", "cuda"], {"default": "cpu"}),  # Execution provider
                 "face_detector_score": ("FLOAT", {"default": 0.65, "min": 0, "max": 1, "step": 0.02}),
                 # Face detector score
                 "mask_blur": ("FLOAT", {"default": 0.7, "min": 0, "max": 1, "step": 0.05}),  # Face mask blur
                 "landmarker_score": ("FLOAT", {"default": 0.5, "min": 0, "max": 1, "step": 0.05})
                 # Face landmarker score
+                "face_enhance_blend": ("FLOAT", {"default": 0.3, "min": 0, "max": 1, "step": 0.01}),
             }
         }
 
@@ -27,18 +31,18 @@ class FaceFusion:
     FUNCTION = "execute"
     CATEGORY = "FaceFusion"
 
-    def execute(self, image, single_source_image, enable, device, face_detector_score, mask_blur, skip_nsfw, landmarker_score):
+    def execute(self, image, single_source_image, device, face_detector_score, mask_blur, landmarker_score,face_enhance_blend):
         pil_images = batch_tensor_to_pil(image)
         source = tensor_to_pil(single_source_image)
         script = FaceFusionScript()
         p = StableDiffusionProcessingImg2Img(pil_images)
         script.process(p=p,
                        img=source,
-                       enable=enable,
                        device=device,
                        face_detector_score=face_detector_score,
                        mask_blur=mask_blur,
-                       imgs=None, skip_nsfw=skip_nsfw,
+                       imgs=None,
+                       face_enhance_blend=face_enhance_blend,
                        landmarker_score=landmarker_score)
         result = batched_pil_to_tensor(p.init_images)
         return (result,)

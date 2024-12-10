@@ -7,7 +7,7 @@ from PIL import Image
 
 from facefusionlib import swapper
 from facefusionlib.swapper import DeviceProvider
-import scripts.facefusion_logging as logger
+import face_scripts.facefusion_logging as logger
 
 
 def get_images_from_list(imgs: Union[List, None]):
@@ -41,7 +41,7 @@ def swap_face(
     detector_score: float,
     mask_blur: float,
     landmarker_score: float,
-    skip_nsfw: bool = True,
+    face_enhance_blend: float = 0.,
     source_imgs: Union[List, None] = None
 ) -> Image.Image:
     if isinstance(source_img, str):  # source_img is a base64 string
@@ -71,7 +71,7 @@ def swap_face(
         provider=provider,
         detector_score=detector_score,
         mask_blur=mask_blur,
-        skip_nsfw=skip_nsfw,
+        face_enhance_blend=face_enhance_blend,
         landmarker_score=landmarker_score
     )
     if result:

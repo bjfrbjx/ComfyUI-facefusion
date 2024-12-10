@@ -1,5 +1,13 @@
-facefusionlib[gpu]==1.1.2
 Pillow
 numpy
 torch
+filetype
 gradio
+gradio-rangeslider
+onnx
+onnxruntime
+onnxruntime-gpu
+opencv-python
+psutil
+tqdm
+scipy
