@@ -24,6 +24,7 @@ class WD_FaceFusion:
                 "landmarker_score": ("FLOAT", {"default": 0.5, "min": 0, "max": 1, "step": 0.05}),
                 # Face landmarker score
                 "face_enhance_blend": ("FLOAT", {"default": 30, "min": 0, "max": 100, "step": 1}),
+                "thread_count":("INT", {"default": 4, "min": 1, "max": 20, "step": 1}),
             }
         }
 
@@ -31,7 +32,7 @@ class WD_FaceFusion:
     FUNCTION = "execute"
     CATEGORY = "FaceFusion"
 
-    def execute(self, image, single_source_image, device, face_detector_score, mask_blur, landmarker_score,face_enhance_blend):
+    def execute(self, image, single_source_image, device, face_detector_score, mask_blur, landmarker_score,face_enhance_blend,thread_count):
         pil_images = batch_tensor_to_pil(image)
         source = tensor_to_pil(single_source_image)
         script = FaceFusionScript()
@@ -43,7 +44,8 @@ class WD_FaceFusion:
                        mask_blur=mask_blur,
                        imgs=None,
                        face_enhance_blend=face_enhance_blend,
-                       landmarker_score=landmarker_score)
+                       landmarker_score=landmarker_score,
+                       thread_count=thread_count)
         result = batched_pil_to_tensor(p.init_images)
         return (result,)
 

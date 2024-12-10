@@ -29,6 +29,7 @@ class FaceFusionScript(scripts.Script):
         imgs,
         landmarker_score,
         face_enhance_blend:float,
+        thread_count:int
     ):
         self.source = img
         self.face_enhance_blend=face_enhance_blend
@@ -37,6 +38,7 @@ class FaceFusionScript(scripts.Script):
         self.mask_blur = mask_blur
         self.source_imgs = imgs
         self.landmarker_score = landmarker_score
+        self.thread_count=thread_count
         if self.source is None:
             logger.error(f"Please provide a source face")
         else:
@@ -56,14 +58,15 @@ class FaceFusionScript(scripts.Script):
             if self.landmarker_score:
                 landmarker_score = self.landmarker_score
             result: Image.Image = swap_face(
-                self.source,
-                image,
-                self.device,
-                self.face_detector_score,
-                self.mask_blur,
-                landmarker_score,
-                self.face_enhance_blend,
-                self.source_imgs
+                source_img= self.source,
+                target_img=image,
+                provider=self.device,
+                detector_score=self.face_detector_score,
+                mask_blur=self.mask_blur,
+                landmarker_score=landmarker_score,
+                face_enhance_blend=self.face_enhance_blend,
+                source_imgs=self.source_imgs,
+                thread_count=self.thread_count,
             )
             pp = scripts_postprocessing.PostprocessedImage(result)
             pp.info = {}

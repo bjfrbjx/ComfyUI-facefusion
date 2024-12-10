@@ -19,14 +19,16 @@ def swap_face(
         provider: DeviceProvider = DeviceProvider.CPU,
         detector_score: float = 0.65,
         mask_blur: float = 0.7,
-        face_enhance_blend: bool = True,
-        landmarker_score: float = 0.5
+        face_enhance_blend: int = 30,
+        landmarker_score: float = 0.5,
+        thread_count:int=1
 ) -> Optional[str]:
     if output_path is None:
         output_path = tempfile.NamedTemporaryFile(delete=False, suffix=".png").name
     result = run(
         source_path=source_paths, target_path=target_path, output_path=output_path,
         provider=provider.value, detector_score=detector_score, mask_blur=mask_blur, face_enhance_blend=face_enhance_blend,
-        landmarker_score=landmarker_score
+        landmarker_score=landmarker_score,
+        thread_count=thread_count
     )
     return result

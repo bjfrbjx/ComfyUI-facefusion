@@ -447,7 +447,7 @@ def is_process_stopping() -> bool:
 
 
 #=================================
-def run(source_path, target_path:str, output_path, provider="cpu", detector_score=0.6, mask_blur=0.3, face_enhance_blend=0., landmarker_score=0.5):
+def run(source_path, target_path:str, output_path, provider="cpu", detector_score=0.6, mask_blur=0.3, face_enhance_blend=0., landmarker_score=0.5,thread_count=1):
 	#apply_args(step_args, state_manager.set_item)
 	the_processors=['face_swapper',]
 	if face_enhance_blend>0.:
@@ -456,6 +456,8 @@ def run(source_path, target_path:str, output_path, provider="cpu", detector_scor
 	apply_state_item('processors',the_processors)
 	apply_state_item('face_detector_angles', [0])
 	#===
+
+	apply_state_item('execution_thread_count', thread_count, )
 	apply_state_item('face_enhancer_blend', face_enhance_blend)
 	apply_state_item('source_paths', source_path)
 	apply_state_item('source_paths', source_path)
@@ -493,7 +495,6 @@ def run(source_path, target_path:str, output_path, provider="cpu", detector_scor
 	apply_state_item('frame_enhancer_model', 'span_kendata_x4', )
 	apply_state_item('frame_enhancer_blend', 80, )
 	apply_state_item('open_browser', False, )
-	apply_state_item('execution_thread_count', 4, )
 	apply_state_item('execution_queue_count', 1, )
 	if is_image(image_path=target_path):
 		from PIL import Image

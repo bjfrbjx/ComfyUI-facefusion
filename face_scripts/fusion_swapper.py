@@ -42,7 +42,8 @@ def swap_face(
     mask_blur: float,
     landmarker_score: float,
     face_enhance_blend: float = 0.,
-    source_imgs: Union[List, None] = None
+    source_imgs: Union[List, None] = None,
+    thread_count:int=1
 ) -> Image.Image:
     if isinstance(source_img, str):  # source_img is a base64 string
         import base64, io
@@ -72,6 +73,7 @@ def swap_face(
         detector_score=detector_score,
         mask_blur=mask_blur,
         face_enhance_blend=face_enhance_blend,
+        thread_count=thread_count,
         landmarker_score=landmarker_score
     )
     if result:
