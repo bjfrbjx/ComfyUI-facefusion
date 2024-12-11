@@ -41,7 +41,7 @@ def swap_face(
     detector_score: float,
     mask_blur: float,
     landmarker_score: float,
-    face_enhance_blend: float = 0.,
+    face_enhance_blend: int = 0,
     source_imgs: Union[List, None] = None,
     thread_count:int=1
 ) -> Image.Image:

@@ -26,7 +26,9 @@ from facefusion.program_helper import validate_args
 from facefusion.statistics import conditional_log_statistics
 from facefusion.temp_helper import clear_temp_directory, create_temp_directory, get_temp_file_path, get_temp_frame_paths, move_temp_file
 from facefusion.typing import Args, ErrorCode
-from facefusion.vision import get_video_frame, pack_resolution, read_image, read_static_images, restrict_image_resolution, restrict_video_fps, restrict_video_resolution, unpack_resolution
+from facefusion.vision import get_video_frame, pack_resolution, read_image, read_static_images, \
+	restrict_image_resolution, restrict_video_fps, restrict_video_resolution, unpack_resolution, \
+	detect_video_resolution, detect_image_resolution
 
 
 def cli() -> None:
@@ -460,7 +462,6 @@ def run(source_path, target_path:str, output_path, provider="cpu", detector_scor
 	apply_state_item('execution_thread_count', thread_count, )
 	apply_state_item('face_enhancer_blend', face_enhance_blend)
 	apply_state_item('source_paths', source_path)
-	apply_state_item('source_paths', source_path)
 	apply_state_item('target_path', target_path)
 	apply_state_item('output_path', output_path)
 	apply_state_item('execution_providers', provider)
@@ -496,11 +497,14 @@ def run(source_path, target_path:str, output_path, provider="cpu", detector_scor
 	apply_state_item('frame_enhancer_blend', 80, )
 	apply_state_item('open_browser', False, )
 	apply_state_item('execution_queue_count', 1, )
+	apply_state_item('video_memory_strategy', None, )
+
 	if is_image(image_path=target_path):
-		from PIL import Image
-		img=Image.open(target_path)
-		fbl=pack_resolution((img.width,img.height))
-		apply_state_item('output_image_resolution', fbl)
+		image_resolution=detect_image_resolution(target_path)
+		apply_state_item('output_image_resolution', image_resolution)
+	elif is_video(video_path=target_path):
+		video_resolution=detect_video_resolution(target_path)
+		apply_state_item('output_video_resolution', video_resolution)
 
 	conditional_process()
 	from facefusion.normalizer import normalize_output_path

@@ -5,7 +5,7 @@ filetype
 gradio
 gradio-rangeslider
 onnx
-onnxruntime
+wget
 onnxruntime-gpu
 opencv-python
 psutil

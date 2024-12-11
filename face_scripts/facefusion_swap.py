@@ -28,7 +28,7 @@ class FaceFusionScript(scripts.Script):
         mask_blur,
         imgs,
         landmarker_score,
-        face_enhance_blend:float,
+        face_enhance_blend:int,
         thread_count:int
     ):
         self.source = img
