@@ -194,17 +194,7 @@ class WD_FaceFusion_Video:
             face_enhance_blend=face_enhance_blend,
             landmarker_score=landmarker_score,
             thread_count=thread_count)
-        previews = [
-            {
-                "filename": file,
-                "subfolder": "",
-                "type": "output",
-                "format": get_mime_type(output_path),
-            }
-        ]
-        import logging
-        logging.error(f"{previews},{output_path}")
-        return {"ui": {"gifs": previews}, "result": (output_path,)}
+        return {"ui":{"video":[file,output_path]}, "result": (output_path,)}
 
 
 NODE_CLASS_MAPPINGS = {
