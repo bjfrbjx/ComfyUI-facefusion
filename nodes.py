@@ -164,8 +164,8 @@ class WD_FaceFusion_Video:
             }
         }
 
-    RETURN_TYPES = ("SCENE_VIDEO", "STRING")
-    RETURN_NAMES = ("scenes_video", "file_path")
+    RETURN_TYPES = ("SCENE_VIDEO",)
+    RETURN_NAMES = ("scenes_video",)
     FUNCTION = "execute"
     CATEGORY = "WDTRIP"
 
@@ -198,11 +198,13 @@ class WD_FaceFusion_Video:
             {
                 "filename": file,
                 "subfolder": "",
-                "type": "temp",
+                "type": "output",
                 "format": get_mime_type(output_path),
             }
         ]
-        return {"ui": {"gifs": previews}, "result": (output_path, output_path)}
+        import logging
+        logging.error(f"{previews},{output_path}")
+        return {"ui": {"gifs": previews}, "result": (output_path,)}
 
 
 NODE_CLASS_MAPPINGS = {
