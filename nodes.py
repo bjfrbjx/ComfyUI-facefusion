@@ -1,3 +1,4 @@
+import mimetypes
 import urllib.request
 
 from PIL import Image
@@ -9,10 +10,23 @@ opener.addheaders = [('User-Agent',
 urllib.request.install_opener(opener)
 
 from .utils import batch_tensor_to_pil, batched_pil_to_tensor, tensor_to_pil
-import tempfile, requests, uuid, folder_paths, os
-
+import tempfile, requests, uuid, os
+try:
+    import folder_paths
+except:
+    folder_paths=None
 
 # =================================
+def get_mime_type(file_path):
+    # 获取文件的 MIME 类型
+    mime_type, _ = mimetypes.guess_type(file_path)
+
+    # 如果无法猜测类型，返回默认类型
+    if mime_type is None:
+        return 'application/octet-stream'
+
+    return mime_type
+
 def facefusion_run(source_path, target_path: str, output_path, provider, detector_score=0.6, mask_blur=0.3,
                    face_enhance_blend=0., landmarker_score=0.5, thread_count=1):
     from facefusion.vision import detect_image_resolution, pack_resolution, detect_video_resolution, detect_video_fps
@@ -77,11 +91,7 @@ def facefusion_run(source_path, target_path: str, output_path, provider, detecto
         apply_state_item('output_video_resolution', pack_resolution(video_resolution))
         apply_state_item('output_video_fps', int(detect_video_fps(target_path)))
     conditional_process()
-    from facefusion.normalizer import normalize_output_path
-    normed_output_path = normalize_output_path(target_path, output_path)
-    if is_image(normed_output_path):
-        return normed_output_path
-    return None
+
 
 class WD_FaceFusion:
     @classmethod
@@ -114,7 +124,7 @@ class WD_FaceFusion:
         batch_tensor_to_pil(image)[0].save(target_path)
 
         output_dir = folder_paths.get_output_directory()
-        full_output_folder, filename, _, subfolder, _, = folder_paths.get_save_image_path("WD_", output_dir)
+        full_output_folder, _, _, _, _, = folder_paths.get_save_image_path("WD_", output_dir)
         file = f"{uuid.uuid4()}.{target_path.split('.')[-1]}"
         output_path = os.path.join(full_output_folder, file)
 
@@ -184,8 +194,15 @@ class WD_FaceFusion_Video:
             face_enhance_blend=face_enhance_blend,
             landmarker_score=landmarker_score,
             thread_count=thread_count)
-
-        return {"ui": {"unfinished_batch": [True]}, "result": (output_path, output_path)}
+        previews = [
+            {
+                "filename": file,
+                "subfolder": "",
+                "type": "temp",
+                "format": get_mime_type(output_path),
+            }
+        ]
+        return {"ui": {"gifs": previews}, "result": (output_path, output_path)}
 
 
 NODE_CLASS_MAPPINGS = {
