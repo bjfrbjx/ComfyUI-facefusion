@@ -7,6 +7,12 @@ from facefusion.typing import AppContext
 def detect_app_context() -> AppContext:
 	frame = sys._getframe(1)
 
+	res=_inner(frame)
+	# from facefusion import logger
+	# logger.error(f"xxxx {res}",__name__)
+	return res
+
+def _inner(frame):
 	while frame:
 		if os.path.join('facefusion', 'jobs') in frame.f_code.co_filename:
 			return 'cli'
