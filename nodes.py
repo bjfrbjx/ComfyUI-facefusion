@@ -164,7 +164,7 @@ class WD_FaceFusion_Video:
             }
         }
 
-    RETURN_TYPES = ("SCENE_VIDEO",)
+    RETURN_TYPES = ("PATH",)
     RETURN_NAMES = ("scenes_video",)
     FUNCTION = "execute"
     CATEGORY = "WDTRIP"
