@@ -30,7 +30,7 @@ class WD_FaceFusion:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    CATEGORY = "FaceFusion"
+    CATEGORY = "WDTRIP"
 
     def execute(self, image, single_source_image, device, face_detector_score, mask_blur, landmarker_score,face_enhance_blend):
         source_path = tempfile.NamedTemporaryFile(delete=False, suffix=".png").name
@@ -81,7 +81,7 @@ class WD_FaceFusion_Video:
     RETURN_TYPES = ("SCENE_VIDEO","STRING")
     RETURN_NAMES = ("scenes_video","file_path")
     FUNCTION = "execute"
-    CATEGORY = "FaceFusion"
+    CATEGORY = "WDTRIP"
 
     def execute(self, video_url, single_source_image, device, face_detector_score, mask_blur, landmarker_score,face_enhance_blend,thread_count):
         # Download the video to a temporary file
