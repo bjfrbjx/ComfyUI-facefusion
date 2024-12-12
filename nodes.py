@@ -90,7 +90,7 @@ class WD_FaceFusion:
             "required": {
                 "image": ("IMAGE",),
                 "single_source_image": ("IMAGE",),  # Single source image
-                "device": (["cpu", "cuda"], {"default": "cpu"}),  # Execution provider
+                "device": (["cpu", "cuda"], {"default": "cuda"}),  # Execution provider
                 "face_detector_score": ("FLOAT", {"default": 0.65, "min": 0, "max": 1, "step": 0.02}),
                 # Face detector score
                 "mask_blur": ("FLOAT", {"default": 0.7, "min": 0, "max": 1, "step": 0.05}),  # Face mask blur
