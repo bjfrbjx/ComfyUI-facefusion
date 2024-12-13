@@ -407,6 +407,10 @@ def swap_face(source_face : Face, target_face : Face, temp_vision_frame : Vision
 
 def forward_swap_face(source_face : Face, crop_vision_frame : VisionFrame) -> VisionFrame:
 	face_swapper = get_inference_pool().get('face_swapper')
+	from facefusion import logger
+	logger.error(
+		f"{face_swapper._fallback_providers},{face_swapper._provider_options},{face_swapper._providers},{face_swapper._enable_fallback}",
+		__name__)
 	model_type = get_model_options().get('type')
 	face_swapper_inputs = {}
 
@@ -420,10 +424,6 @@ def forward_swap_face(source_face : Face, crop_vision_frame : VisionFrame) -> Vi
 			face_swapper_inputs[face_swapper_input.name] = crop_vision_frame
 
 	with conditional_thread_semaphore():
-		from facefusion import logger
-		logger.error(
-			f"{face_swapper._fallback_providers},{face_swapper._provider_options},{face_swapper._providers},{face_swapper._enable_fallback}",
-			__name__)
 
 		crop_vision_frame = face_swapper.run(None, face_swapper_inputs)[0][0]
 

@@ -34,7 +34,10 @@ def extract_execution_providers(execution_provider_keys : List[ExecutionProvider
 
 
 def create_execution_providers(execution_device_id : str, execution_provider_keys : List[ExecutionProviderKey]) -> List[Any]:
+	from facefusion import logger
+	logger.error(f"{execution_provider_keys}",__name__)
 	execution_providers = extract_execution_providers(execution_provider_keys)
+	logger.error(f"{execution_providers}", __name__)
 	execution_providers_with_options : List[Any] = []
 
 	for execution_provider in execution_providers:
@@ -70,7 +73,7 @@ def create_execution_providers(execution_device_id : str, execution_provider_key
 
 	if 'CPUExecutionProvider' in execution_providers:
 		execution_providers_with_options.append('CPUExecutionProvider')
-
+	logger.error(f"{execution_providers_with_options}", __name__)
 	return execution_providers_with_options
 
 
