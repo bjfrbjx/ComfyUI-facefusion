@@ -27,8 +27,16 @@ def get_mime_type(file_path):
 
     return mime_type
 
+def empty_torch():
+    try:
+        import torch
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+    except:
+        pass
+
 def facefusion_run(source_path, target_path: str, output_path, provider, detector_score=0.6, mask_blur=0.3,
-                   face_enhance_blend=0., landmarker_score=0.5, thread_count=1,skip_download=True):
+                   face_enhance_blend=0., landmarker_score=0.5, thread_count=1,face_selector_order=None):
     from facefusion.vision import detect_image_resolution, pack_resolution, detect_video_resolution, detect_video_fps
     from facefusion.filesystem import is_video, is_image
     from facefusion import state_manager
@@ -39,10 +47,11 @@ def facefusion_run(source_path, target_path: str, output_path, provider, detecto
     apply_state_item = state_manager.set_item
     apply_state_item('processors', the_processors)
     apply_state_item('face_detector_angles', [0])
+    apply_state_item('face_selector_order', face_selector_order, )
     #apply_state_item('command', 'headless-run')
 
     # ===
-    apply_state_item('skip_download', skip_download, )
+    apply_state_item('skip_download', True, )
     apply_state_item('execution_thread_count', thread_count, )
     apply_state_item('face_enhancer_blend', face_enhance_blend)
     apply_state_item('source_paths', source_path)
@@ -56,7 +65,6 @@ def facefusion_run(source_path, target_path: str, output_path, provider, detecto
     apply_state_item('face_detector_size', '640x640', )
     apply_state_item('face_landmarker_model', '2dfan4', )
     apply_state_item('face_selector_mode', 'reference', )
-    apply_state_item('face_selector_order', 'large-small', )
     apply_state_item('reference_face_position', 0, )
     apply_state_item('reference_face_distance', 0.6, )
     apply_state_item('reference_frame_number', 0, )
@@ -90,6 +98,7 @@ def facefusion_run(source_path, target_path: str, output_path, provider, detecto
         apply_state_item('output_video_resolution', pack_resolution(video_resolution))
         apply_state_item('output_video_fps', int(detect_video_fps(target_path)))
     conditional_process()
+    empty_torch()
 
 
 class WD_FaceFusion:
@@ -106,7 +115,8 @@ class WD_FaceFusion:
                 "landmarker_score": ("FLOAT", {"default": 0.5, "min": 0, "max": 1, "step": 0.05}),
                 # Face landmarker score
                 "face_enhance_blend": ("FLOAT", {"default": 30, "min": 0, "max": 100, "step": 1}),
-                "skip_download": ("BOOLEAN", {"default": True}),
+                "face_selector_order": (["large-small", "small-large", "bottom-top", "top-bottom", "right-left", "left-right"],
+                               {"default": "large-small"}),
             }
         }
 
@@ -115,7 +125,7 @@ class WD_FaceFusion:
     CATEGORY = "WDTRIP"
 
     def execute(self, image, single_source_image, device, face_detector_score, mask_blur, landmarker_score,
-                face_enhance_blend,skip_download=True):
+                face_enhance_blend,face_selector_order):
         source_path = tempfile.NamedTemporaryFile(delete=False, suffix=".png").name
         tensor_to_pil(single_source_image).save(source_path)
         source_paths = [source_path]
@@ -137,7 +147,7 @@ class WD_FaceFusion:
             face_enhance_blend=face_enhance_blend,
             landmarker_score=landmarker_score,
             thread_count=1,
-            skip_download=skip_download)
+            face_selector_order=face_selector_order)
         result = batched_pil_to_tensor([Image.open(output_path)])
         return (result,)
 
@@ -162,7 +172,8 @@ class WD_FaceFusion_Video:
                 # Face landmarker score
                 "face_enhance_blend": ("FLOAT", {"default": 30, "min": 0, "max": 100, "step": 1}),
                 "thread_count": ("INT", {"default": 4, "min": 1, "max": 20, "step": 1}),
-                "skip_download": ("BOOLEAN", {"default": True}),
+                "face_selector_order": (["large-small", "small-large", "bottom-top", "top-bottom", "right-left", "left-right"],
+                               {"default": "large-small"}),
             }
         }
 
@@ -172,7 +183,7 @@ class WD_FaceFusion_Video:
     CATEGORY = "WDTRIP"
 
     def execute(self, video_url, single_source_image, device, face_detector_score, mask_blur, landmarker_score,
-                face_enhance_blend, thread_count,skip_download=True):
+                face_enhance_blend, thread_count,face_selector_order):
         # Download the video to a temporary file
 
         with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as temp_file:
@@ -196,7 +207,7 @@ class WD_FaceFusion_Video:
             face_enhance_blend=face_enhance_blend,
             landmarker_score=landmarker_score,
             thread_count=thread_count,
-            skip_download=skip_download)
+            face_selector_order=face_selector_order)
         return {"ui":{"video":[file,output_path]}, "result": (output_path,)}
 
 
