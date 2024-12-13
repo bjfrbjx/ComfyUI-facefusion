@@ -171,7 +171,7 @@ class WD_FaceFusion_Video:
                 "single_source_image": ("IMAGE",),  # Single source image
                 "device": (["cpu", "cuda"], {"default": "cuda"}),  # Execution provider
                 "video_url": ("STRING", {
-                    "default": "https://wdduoduo-videos.oss-cn-hangzhou.aliyuncs.com/test/None/painter/pose7_20241114183403.mp4",
+                    "default": "",
                     "defaultBehavior": "input"
                 }),
                 "face_detector_score": ("FLOAT", {"default": 0.65, "min": 0, "max": 1, "step": 0.02}),
@@ -198,11 +198,16 @@ class WD_FaceFusion_Video:
                 face_enhance_blend, thread_count,face_selector_order,face_selector_mode,reference_face_position,reference_face_distance):
         # Download the video to a temporary file
 
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as temp_file:
-            response = requests.get(video_url.strip(), stream=True)
-            for chunk in response.iter_content(chunk_size=8192):
-                temp_file.write(chunk)
-            target_path = temp_file.name
+        if video_url and video_url.startswith("http"):
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as temp_file:
+                response = requests.get(video_url.strip(), stream=True)
+                for chunk in response.iter_content(chunk_size=8192):
+                    temp_file.write(chunk)
+                target_path = temp_file.name
+        elif video_url.startswith("/"):
+            target_path=video_url
+        else:
+            target_path = os.path.join(folder_paths.get_input_directory(),video_url)
         output_dir = folder_paths.get_output_directory()
         full_output_folder, filename, _, subfolder, _, = folder_paths.get_save_image_path("WD_", output_dir)
         file = f"{uuid.uuid4()}.{target_path.split('.')[-1]}"
