@@ -19,7 +19,7 @@ MODEL_SET : ModelSet =\
 		{
 			'content_analyser':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/open_nsfw.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/open_nsfw.hash',
 				'path': resolve_relative_path('../.assets/models/open_nsfw.hash')
 			}
 		},
@@ -27,7 +27,7 @@ MODEL_SET : ModelSet =\
 		{
 			'content_analyser':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/open_nsfw.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/open_nsfw.onnx',
 				'path': resolve_relative_path('../.assets/models/open_nsfw.onnx')
 			}
 		},

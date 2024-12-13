@@ -32,7 +32,7 @@ MODEL_SET : ModelSet =\
 		{
 			'lip_syncer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/wav2lip_96.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/wav2lip_96.hash',
 				'path': resolve_relative_path('../.assets/models/wav2lip.hash')
 			}
 		},
@@ -40,7 +40,7 @@ MODEL_SET : ModelSet =\
 		{
 			'lip_syncer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/wav2lip_96.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/wav2lip_96.onnx',
 				'path': resolve_relative_path('../.assets/models/wav2lip.onnx')
 			}
 		},
@@ -52,7 +52,7 @@ MODEL_SET : ModelSet =\
 		{
 			'lip_syncer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/wav2lip_gan_96.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/wav2lip_gan_96.hash',
 				'path': resolve_relative_path('../.assets/models/wav2lip_gan.hash')
 			}
 		},
@@ -60,7 +60,7 @@ MODEL_SET : ModelSet =\
 		{
 			'lip_syncer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/wav2lip_gan_96.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/wav2lip_gan_96.onnx',
 				'path': resolve_relative_path('../.assets/models/wav2lip_gan.onnx')
 			}
 		},

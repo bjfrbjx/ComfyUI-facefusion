@@ -32,32 +32,32 @@ MODEL_SET : ModelSet =\
 		{
 			'feature_extractor':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/live_portrait_feature_extractor.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/live_portrait_feature_extractor.hash',
 				'path': resolve_relative_path('../.assets/models/live_portrait_feature_extractor.hash')
 			},
 			'motion_extractor':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/live_portrait_motion_extractor.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/live_portrait_motion_extractor.hash',
 				'path': resolve_relative_path('../.assets/models/live_portrait_motion_extractor.hash')
 			},
 			'eye_retargeter':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/live_portrait_eye_retargeter.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/live_portrait_eye_retargeter.hash',
 				'path': resolve_relative_path('../.assets/models/live_portrait_eye_retargeter.hash')
 			},
 			'lip_retargeter':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/live_portrait_lip_retargeter.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/live_portrait_lip_retargeter.hash',
 				'path': resolve_relative_path('../.assets/models/live_portrait_lip_retargeter.hash')
 			},
 			'stitcher':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/live_portrait_stitcher.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/live_portrait_stitcher.hash',
 				'path': resolve_relative_path('../.assets/models/live_portrait_stitcher.hash')
 			},
 			'generator':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/live_portrait_generator.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/live_portrait_generator.hash',
 				'path': resolve_relative_path('../.assets/models/live_portrait_generator.hash')
 			}
 		},
@@ -65,32 +65,32 @@ MODEL_SET : ModelSet =\
 		{
 			'feature_extractor':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/live_portrait_feature_extractor.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/live_portrait_feature_extractor.onnx',
 				'path': resolve_relative_path('../.assets/models/live_portrait_feature_extractor.onnx')
 			},
 			'motion_extractor':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/live_portrait_motion_extractor.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/live_portrait_motion_extractor.onnx',
 				'path': resolve_relative_path('../.assets/models/live_portrait_motion_extractor.onnx')
 			},
 			'eye_retargeter':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/live_portrait_eye_retargeter.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/live_portrait_eye_retargeter.onnx',
 				'path': resolve_relative_path('../.assets/models/live_portrait_eye_retargeter.onnx')
 			},
 			'lip_retargeter':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/live_portrait_lip_retargeter.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/live_portrait_lip_retargeter.onnx',
 				'path': resolve_relative_path('../.assets/models/live_portrait_lip_retargeter.onnx')
 			},
 			'stitcher':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/live_portrait_stitcher.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/live_portrait_stitcher.onnx',
 				'path': resolve_relative_path('../.assets/models/live_portrait_stitcher.onnx')
 			},
 			'generator':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/live_portrait_generator.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/live_portrait_generator.onnx',
 				'path': resolve_relative_path('../.assets/models/live_portrait_generator.onnx')
 			}
 		},

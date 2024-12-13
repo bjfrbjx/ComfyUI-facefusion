@@ -54,7 +54,7 @@ def facefusion_run(source_path, target_path: str, output_path, provider,face_sel
     apply_state_item('face_selector_mode', face_selector_mode, )
     apply_state_item('reference_face_position', reference_face_position, )
     apply_state_item('reference_face_distance', reference_face_distance, )
-    apply_state_item('skip_download', True, )
+    apply_state_item('skip_download', False, )
     apply_state_item('execution_thread_count', thread_count, )
     apply_state_item('face_enhancer_blend', face_enhance_blend)
     apply_state_item('source_paths', source_path)
@@ -97,7 +97,9 @@ def facefusion_run(source_path, target_path: str, output_path, provider,face_sel
         video_resolution = detect_video_resolution(target_path)
         apply_state_item('output_video_resolution', pack_resolution(video_resolution))
         apply_state_item('output_video_fps', int(detect_video_fps(target_path)))
-    conditional_process()
+    from facefusion.core import processors_pre_check
+    if processors_pre_check():
+        conditional_process()
     empty_torch()
 
 

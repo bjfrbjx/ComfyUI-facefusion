@@ -26,7 +26,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_enhancer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/clear_reality_x4.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/clear_reality_x4.hash',
 				'path': resolve_relative_path('../.assets/models/clear_reality_x4.hash')
 			}
 		},
@@ -34,7 +34,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_enhancer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/clear_reality_x4.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/clear_reality_x4.onnx',
 				'path': resolve_relative_path('../.assets/models/clear_reality_x4.onnx')
 			}
 		},
@@ -47,7 +47,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_enhancer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/lsdir_x4.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/lsdir_x4.hash',
 				'path': resolve_relative_path('../.assets/models/lsdir_x4.hash')
 			}
 		},
@@ -55,7 +55,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_enhancer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/lsdir_x4.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/lsdir_x4.onnx',
 				'path': resolve_relative_path('../.assets/models/lsdir_x4.onnx')
 			}
 		},
@@ -68,7 +68,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_enhancer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/nomos8k_sc_x4.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/nomos8k_sc_x4.hash',
 				'path': resolve_relative_path('../.assets/models/nomos8k_sc_x4.hash')
 			}
 		},
@@ -76,7 +76,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_enhancer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/nomos8k_sc_x4.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/nomos8k_sc_x4.onnx',
 				'path': resolve_relative_path('../.assets/models/nomos8k_sc_x4.onnx')
 			}
 		},
@@ -89,7 +89,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_enhancer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_esrgan_x2.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_esrgan_x2.hash',
 				'path': resolve_relative_path('../.assets/models/real_esrgan_x2.hash')
 			}
 		},
@@ -97,7 +97,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_enhancer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_esrgan_x2.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_esrgan_x2.onnx',
 				'path': resolve_relative_path('../.assets/models/real_esrgan_x2.onnx')
 			}
 		},
@@ -110,7 +110,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_enhancer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_esrgan_x2_fp16.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_esrgan_x2_fp16.hash',
 				'path': resolve_relative_path('../.assets/models/real_esrgan_x2_fp16.hash')
 			}
 		},
@@ -118,7 +118,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_enhancer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_esrgan_x2_fp16.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_esrgan_x2_fp16.onnx',
 				'path': resolve_relative_path('../.assets/models/real_esrgan_x2_fp16.onnx')
 			}
 		},
@@ -131,7 +131,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_enhancer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_esrgan_x4.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_esrgan_x4.hash',
 				'path': resolve_relative_path('../.assets/models/real_esrgan_x4.hash')
 			}
 		},
@@ -139,7 +139,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_enhancer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_esrgan_x4.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_esrgan_x4.onnx',
 				'path': resolve_relative_path('../.assets/models/real_esrgan_x4.onnx')
 			}
 		},
@@ -152,7 +152,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_enhancer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_esrgan_x4_fp16.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_esrgan_x4_fp16.hash',
 				'path': resolve_relative_path('../.assets/models/real_esrgan_x4_fp16.hash')
 			}
 		},
@@ -160,7 +160,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_enhancer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_esrgan_x4_fp16.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_esrgan_x4_fp16.onnx',
 				'path': resolve_relative_path('../.assets/models/real_esrgan_x4_fp16.onnx')
 			}
 		},
@@ -173,7 +173,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_enhancer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_esrgan_x8.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_esrgan_x8.hash',
 				'path': resolve_relative_path('../.assets/models/real_esrgan_x8.hash')
 			}
 		},
@@ -181,7 +181,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_enhancer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_esrgan_x8.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_esrgan_x8.onnx',
 				'path': resolve_relative_path('../.assets/models/real_esrgan_x8.onnx')
 			}
 		},
@@ -194,7 +194,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_enhancer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_esrgan_x8_fp16.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_esrgan_x8_fp16.hash',
 				'path': resolve_relative_path('../.assets/models/real_esrgan_x8_fp16.hash')
 			}
 		},
@@ -202,7 +202,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_enhancer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_esrgan_x8_fp16.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_esrgan_x8_fp16.onnx',
 				'path': resolve_relative_path('../.assets/models/real_esrgan_x8_fp16.onnx')
 			}
 		},
@@ -215,7 +215,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_enhancer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_hatgan_x4.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_hatgan_x4.hash',
 				'path': resolve_relative_path('../.assets/models/real_hatgan_x4.hash')
 			}
 		},
@@ -223,7 +223,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_enhancer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_hatgan_x4.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/real_hatgan_x4.onnx',
 				'path': resolve_relative_path('../.assets/models/real_hatgan_x4.onnx')
 			}
 		},
@@ -236,7 +236,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_enhancer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/span_kendata_x4.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/span_kendata_x4.hash',
 				'path': resolve_relative_path('../.assets/models/span_kendata_x4.hash')
 			}
 		},
@@ -244,7 +244,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_enhancer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/span_kendata_x4.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/span_kendata_x4.onnx',
 				'path': resolve_relative_path('../.assets/models/span_kendata_x4.onnx')
 			}
 		},
@@ -257,7 +257,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_enhancer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ultra_sharp_x4.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ultra_sharp_x4.hash',
 				'path': resolve_relative_path('../.assets/models/ultra_sharp_x4.hash')
 			}
 		},
@@ -265,7 +265,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_enhancer':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ultra_sharp_x4.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ultra_sharp_x4.onnx',
 				'path': resolve_relative_path('../.assets/models/ultra_sharp_x4.onnx')
 			}
 		},

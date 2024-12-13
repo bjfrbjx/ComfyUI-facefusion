@@ -17,7 +17,7 @@ MODEL_SET : ModelSet =\
 		{
 			'face_classifier':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/fairface.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/fairface.hash',
 				'path': resolve_relative_path('../.assets/models/fairface.hash')
 			}
 		},
@@ -25,7 +25,7 @@ MODEL_SET : ModelSet =\
 		{
 			'face_classifier':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/fairface.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/fairface.onnx',
 				'path': resolve_relative_path('../.assets/models/fairface.onnx')
 			}
 		},

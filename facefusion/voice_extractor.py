@@ -17,7 +17,7 @@ MODEL_SET : ModelSet =\
 		{
 			'voice_extractor':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/kim_vocal_2.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/kim_vocal_2.hash',
 				'path': resolve_relative_path('../.assets/models/kim_vocal_2.hash')
 			}
 		},
@@ -25,7 +25,7 @@ MODEL_SET : ModelSet =\
 		{
 			'voice_extractor':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/kim_vocal_2.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/kim_vocal_2.onnx',
 				'path': resolve_relative_path('../.assets/models/kim_vocal_2.onnx')
 			}
 		}

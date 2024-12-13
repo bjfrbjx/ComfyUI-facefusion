@@ -104,7 +104,7 @@ def listen() -> None:
 	job_runner.listen()
 	job_manager.listen()
 	terminal.listen()
-	preview.listen()
+	#preview.listen()
 	trim_frame.listen()
 	face_selector.listen()
 	face_masker.listen()

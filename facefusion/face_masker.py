@@ -19,7 +19,7 @@ MODEL_SET : ModelSet =\
 		{
 			'face_occluder':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/dfl_xseg.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/dfl_xseg.hash',
 				'path': resolve_relative_path('../.assets/models/dfl_xseg.hash')
 			}
 		},
@@ -27,7 +27,7 @@ MODEL_SET : ModelSet =\
 		{
 			'face_occluder':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/dfl_xseg.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/dfl_xseg.onnx',
 				'path': resolve_relative_path('../.assets/models/dfl_xseg.onnx')
 			}
 		},
@@ -39,7 +39,7 @@ MODEL_SET : ModelSet =\
 		{
 			'face_parser':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/resnet_34.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/resnet_34.hash',
 				'path': resolve_relative_path('../.assets/models/resnet_34.hash')
 			}
 		},
@@ -47,7 +47,7 @@ MODEL_SET : ModelSet =\
 		{
 			'face_parser':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/resnet_34.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/resnet_34.onnx',
 				'path': resolve_relative_path('../.assets/models/resnet_34.onnx')
 			}
 		},

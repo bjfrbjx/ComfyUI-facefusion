@@ -19,7 +19,7 @@ MODEL_SET : ModelSet =\
 		{
 			'retinaface':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/retinaface_10g.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/retinaface_10g.hash',
 				'path': resolve_relative_path('../.assets/models/retinaface_10g.hash')
 			}
 		},
@@ -27,7 +27,7 @@ MODEL_SET : ModelSet =\
 		{
 			'retinaface':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/retinaface_10g.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/retinaface_10g.onnx',
 				'path': resolve_relative_path('../.assets/models/retinaface_10g.onnx')
 			}
 		}
@@ -38,7 +38,7 @@ MODEL_SET : ModelSet =\
 		{
 			'scrfd':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/scrfd_2.5g.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/scrfd_2.5g.hash',
 				'path': resolve_relative_path('../.assets/models/scrfd_2.5g.hash')
 			}
 		},
@@ -46,7 +46,7 @@ MODEL_SET : ModelSet =\
 		{
 			'scrfd':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/scrfd_2.5g.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/scrfd_2.5g.onnx',
 				'path': resolve_relative_path('../.assets/models/scrfd_2.5g.onnx')
 			}
 		}
@@ -57,7 +57,7 @@ MODEL_SET : ModelSet =\
 		{
 			'yoloface':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/yoloface_8n.hash',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/yoloface_8n.hash',
 				'path': resolve_relative_path('../.assets/models/yoloface_8n.hash')
 			}
 		},
@@ -65,7 +65,7 @@ MODEL_SET : ModelSet =\
 		{
 			'yoloface':
 			{
-				'url': 'https://gh.tryxd.cn/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/yoloface_8n.onnx',
+				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/yoloface_8n.onnx',
 				'path': resolve_relative_path('../.assets/models/yoloface_8n.onnx')
 			}
 		}
