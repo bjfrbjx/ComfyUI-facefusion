@@ -520,7 +520,7 @@ def process_frame(inputs : FaceSwapperInputs) -> VisionFrame:
 			for target_face in many_faces:
 				target_vision_frame = swap_face(source_face, target_face, target_vision_frame)
 	if state_manager.get_item('face_selector_mode') == 'one':
-		target_face = get_one_face(many_faces)
+		target_face = get_one_face(many_faces,position=state_manager.get_item('reference_face_position'))
 		if target_face:
 			target_vision_frame = swap_face(source_face, target_face, target_vision_frame)
 	if state_manager.get_item('face_selector_mode') == 'reference':
