@@ -73,9 +73,9 @@ def forward(crop_vision_frame : VisionFrame) -> Embedding:
 	face_recognizer = get_inference_pool().get('face_recognizer')
 
 	with conditional_thread_semaphore():
-		embedding = face_recognizer.run(None,
-		{
-			'input': crop_vision_frame
-		})[0]
+		try:
+			embedding = face_recognizer.run(None, {'input': crop_vision_frame})[0]
+		except ValueError:
+			embedding = face_recognizer.run(None, {'input.1': crop_vision_frame})[0]
 
 	return embedding
