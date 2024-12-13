@@ -60,10 +60,7 @@ def clear_inference_pool(model_context : str) -> None:
 
 def create_inference_session(model_path : str, execution_device_id : str, execution_provider_keys : List[ExecutionProviderKey]) -> InferenceSession:
 	execution_providers = create_execution_providers(execution_device_id, execution_provider_keys)
-	from facefusion import logger
-	logger.error(f"{execution_providers}", __name__)
 	res = InferenceSession(model_path, providers = execution_providers)
-	logger.error(f"{res.get_providers()},{res.get_provider_options()}", __name__)
 	return res
 
 
