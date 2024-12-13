@@ -35,7 +35,7 @@ def empty_torch():
     except:
         pass
 
-def facefusion_run(source_path, target_path: str, output_path, provider, detector_score=0.6, mask_blur=0.3,
+def facefusion_run(source_path, target_path: str, output_path, provider,face_selector_mode,reference_face_position,reference_face_distance, detector_score=0.6, mask_blur=0.3,
                    face_enhance_blend=0., landmarker_score=0.5, thread_count=1,face_selector_order=None):
     from facefusion.vision import detect_image_resolution, pack_resolution, detect_video_resolution, detect_video_fps
     from facefusion.filesystem import is_video, is_image
@@ -51,6 +51,9 @@ def facefusion_run(source_path, target_path: str, output_path, provider, detecto
     #apply_state_item('command', 'headless-run')
 
     # ===
+    apply_state_item('face_selector_mode', face_selector_mode, )
+    apply_state_item('reference_face_position', reference_face_position, )
+    apply_state_item('reference_face_distance', reference_face_distance, )
     apply_state_item('skip_download', True, )
     apply_state_item('execution_thread_count', thread_count, )
     apply_state_item('face_enhancer_blend', face_enhance_blend)
@@ -64,9 +67,6 @@ def facefusion_run(source_path, target_path: str, output_path, provider, detecto
     apply_state_item('face_detector_model', 'yoloface', )
     apply_state_item('face_detector_size', '640x640', )
     apply_state_item('face_landmarker_model', '2dfan4', )
-    apply_state_item('face_selector_mode', 'reference', )
-    apply_state_item('reference_face_position', 0, )
-    apply_state_item('reference_face_distance', 0.6, )
     apply_state_item('reference_frame_number', 0, )
     apply_state_item('face_mask_types', ['box'], )
     apply_state_item('face_mask_padding', (0, 0, 0, 0), )
@@ -117,6 +117,9 @@ class WD_FaceFusion:
                 "face_enhance_blend": ("FLOAT", {"default": 30, "min": 0, "max": 100, "step": 1}),
                 "face_selector_order": (["large-small", "small-large", "bottom-top", "top-bottom", "right-left", "left-right"],
                                {"default": "large-small"}),
+                "face_selector_mode": (['many', 'one', 'reference'], {"default": "reference"}),
+                "reference_face_position": ("INT",{"default": 0}),
+                "reference_face_distance": ("FLOAT", {"max": 2.0, "min": 0.0,"default": 0.6}),
             }
         }
 
@@ -125,7 +128,7 @@ class WD_FaceFusion:
     CATEGORY = "WDTRIP"
 
     def execute(self, image, single_source_image, device, face_detector_score, mask_blur, landmarker_score,
-                face_enhance_blend,face_selector_order):
+                face_enhance_blend,face_selector_order,face_selector_mode,reference_face_position,reference_face_distance):
         source_path = tempfile.NamedTemporaryFile(delete=False, suffix=".png").name
         tensor_to_pil(single_source_image).save(source_path)
         source_paths = [source_path]
@@ -147,7 +150,11 @@ class WD_FaceFusion:
             face_enhance_blend=face_enhance_blend,
             landmarker_score=landmarker_score,
             thread_count=1,
-            face_selector_order=face_selector_order)
+            face_selector_order=face_selector_order,
+            face_selector_mode=face_selector_mode,
+            reference_face_position=reference_face_position,
+            reference_face_distance=reference_face_distance
+            )
         result = batched_pil_to_tensor([Image.open(output_path)])
         return (result,)
 
@@ -174,6 +181,9 @@ class WD_FaceFusion_Video:
                 "thread_count": ("INT", {"default": 4, "min": 1, "max": 20, "step": 1}),
                 "face_selector_order": (["large-small", "small-large", "bottom-top", "top-bottom", "right-left", "left-right"],
                                {"default": "large-small"}),
+                "face_selector_mode": (['many', 'one', 'reference'], {"default": "reference"}),
+                "reference_face_position": ("INT",{"default": 0}),
+                "reference_face_distance": ("FLOAT", {"max": 2.0, "min": 0.0,"default": 0.6}),
             }
         }
 
@@ -183,7 +193,7 @@ class WD_FaceFusion_Video:
     CATEGORY = "WDTRIP"
 
     def execute(self, video_url, single_source_image, device, face_detector_score, mask_blur, landmarker_score,
-                face_enhance_blend, thread_count,face_selector_order):
+                face_enhance_blend, thread_count,face_selector_order,face_selector_mode,reference_face_position,reference_face_distance):
         # Download the video to a temporary file
 
         with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as temp_file:
@@ -207,16 +217,71 @@ class WD_FaceFusion_Video:
             face_enhance_blend=face_enhance_blend,
             landmarker_score=landmarker_score,
             thread_count=thread_count,
-            face_selector_order=face_selector_order)
+            face_selector_order=face_selector_order,
+            face_selector_mode=face_selector_mode,
+            reference_face_position=reference_face_position,
+            reference_face_distance=reference_face_distance
+                       )
         return {"ui":{"video":[file,output_path]}, "result": (output_path,)}
 
+
+class WD_LoadVideo:
+    @classmethod
+    def INPUT_TYPES(s):
+        input_dir = folder_paths.get_input_directory()
+        files = [f for f in os.listdir(input_dir) if
+                 os.path.isfile(os.path.join(input_dir, f)) and f.split('.')[-1] in ["mp4", "mkv", "mov", "avi", "flv",
+                                                                                     "wmv", "webm", "m4v"]]
+        return {"required": {
+            "video": (files,),
+        }}
+
+    CATEGORY = "WDTRIP"
+    DESCRIPTION = "Load Video"
+
+    RETURN_TYPES = ("PATH",)
+
+    OUTPUT_NODE = False
+
+    FUNCTION = "load_video"
+
+    def load_video(self, video):
+        input_dir = folder_paths.get_input_directory()
+        video_path = os.path.join(input_dir, video)
+        return (video_path,)
+
+
+class WD_PreviewVideo:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {"required": {
+            "video": ("PATH",),
+        }}
+
+    CATEGORY = "WDTRIP"
+    DESCRIPTION = "Preview Video"
+
+    RETURN_TYPES = ()
+
+    OUTPUT_NODE = False
+
+    FUNCTION = "load_video"
+
+    def load_video(self, video):
+        video_name = os.path.basename(video)
+        video_path_name = os.path.basename(os.path.dirname(video))
+        return {"ui": {"video": [video_name, video_path_name]}}
 
 NODE_CLASS_MAPPINGS = {
     "WD_FaceFusion": WD_FaceFusion,
     "WD_FaceFusion_Video": WD_FaceFusion_Video,
+    "WD_LoadVideo": WD_LoadVideo,
+    "WD_PreviewVideo": WD_PreviewVideo,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "WD_FaceFusion": "WD_FaceFusion",
     "WD_FaceFusion_Video": "WD_FaceFusion_Video",
+    "WD_LoadVideo": "WD_LoadVideo",
+    "WD_PreviewVideo": "WD_PreviewVideo",
 }
