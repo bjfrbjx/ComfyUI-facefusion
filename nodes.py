@@ -61,7 +61,6 @@ def facefusion_run(source_path, target_path: str, output_path, provider, detecto
     apply_state_item('reference_face_distance', 0.6, )
     apply_state_item('reference_frame_number', 0, )
     apply_state_item('face_mask_types', ['box'], )
-    apply_state_item('face_mask_blur', 0.3, )
     apply_state_item('face_mask_padding', (0, 0, 0, 0), )
     apply_state_item('temp_frame_format', 'png', )
     apply_state_item('output_image_quality', 80, )
