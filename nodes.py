@@ -245,36 +245,6 @@ class WD_FaceFusion_Video:
         return {"ui": {"video": [file, output_path]}, "result": (output_path,)}
 
 
-class WD_UploadVideo:
-    @classmethod
-    def INPUT_TYPES(s):
-        return {"required": {
-            "upload_button": ("BUTTON", {"text": "Upload Video"}),
-        }}
-
-    CATEGORY = "WDTRIP"
-    DESCRIPTION = "Upload Video"
-
-    RETURN_TYPES = ("PATH",)
-    RETURN_NAMES = ("video_path",)
-    OUTPUT_NODE = True
-
-    FUNCTION = "upload_video"
-
-    def upload_video(self, upload_button):
-        # 这里返回一个特殊的UI指令，让前端显示文件上传对话框
-        return {"ui": {"upload": ["video", video_extensions]}, "result": None}
-
-    @classmethod
-    def IS_CHANGED(s, upload_button):
-        # 确保每次点击按钮都触发执行
-        return float("NaN")
-
-    @classmethod
-    def VALIDATE_INPUTS(s, upload_button):
-        return True
-
-
 class WD_PreviewVideo:
     @classmethod
     def INPUT_TYPES(s):
@@ -300,13 +270,11 @@ class WD_PreviewVideo:
 NODE_CLASS_MAPPINGS = {
     "WD_FaceFusion": WD_FaceFusion,
     "WD_FaceFusion_Video": WD_FaceFusion_Video,
-    "WD_UploadVideo": WD_UploadVideo,
     "WD_PreviewVideo": WD_PreviewVideo,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "WD_FaceFusion": "WD_FaceFusion",
     "WD_FaceFusion_Video": "WD_FaceFusion_Video",
-    "WD_UploadVideo": "WD_UploadVideo",
     "WD_PreviewVideo": "WD_PreviewVideo",
 }
