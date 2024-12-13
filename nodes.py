@@ -28,7 +28,7 @@ def get_mime_type(file_path):
     return mime_type
 
 def facefusion_run(source_path, target_path: str, output_path, provider, detector_score=0.6, mask_blur=0.3,
-                   face_enhance_blend=0., landmarker_score=0.5, thread_count=1):
+                   face_enhance_blend=0., landmarker_score=0.5, thread_count=1,skip_download=True):
     from facefusion.vision import detect_image_resolution, pack_resolution, detect_video_resolution, detect_video_fps
     from facefusion.filesystem import is_video, is_image
     from facefusion import state_manager
@@ -42,7 +42,7 @@ def facefusion_run(source_path, target_path: str, output_path, provider, detecto
     #apply_state_item('command', 'headless-run')
 
     # ===
-
+    apply_state_item('skip_download', skip_download, )
     apply_state_item('execution_thread_count', thread_count, )
     apply_state_item('face_enhancer_blend', face_enhance_blend)
     apply_state_item('source_paths', source_path)
@@ -106,6 +106,7 @@ class WD_FaceFusion:
                 "landmarker_score": ("FLOAT", {"default": 0.5, "min": 0, "max": 1, "step": 0.05}),
                 # Face landmarker score
                 "face_enhance_blend": ("FLOAT", {"default": 30, "min": 0, "max": 100, "step": 1}),
+                "skip_download": ("BOOLEAN", {"default": True}),
             }
         }
 
@@ -114,7 +115,7 @@ class WD_FaceFusion:
     CATEGORY = "WDTRIP"
 
     def execute(self, image, single_source_image, device, face_detector_score, mask_blur, landmarker_score,
-                face_enhance_blend):
+                face_enhance_blend,skip_download=True):
         source_path = tempfile.NamedTemporaryFile(delete=False, suffix=".png").name
         tensor_to_pil(single_source_image).save(source_path)
         source_paths = [source_path]
@@ -135,7 +136,8 @@ class WD_FaceFusion:
             mask_blur=mask_blur,
             face_enhance_blend=face_enhance_blend,
             landmarker_score=landmarker_score,
-            thread_count=1)
+            thread_count=1,
+            skip_download=skip_download)
         result = batched_pil_to_tensor([Image.open(output_path)])
         return (result,)
 
@@ -160,6 +162,7 @@ class WD_FaceFusion_Video:
                 # Face landmarker score
                 "face_enhance_blend": ("FLOAT", {"default": 30, "min": 0, "max": 100, "step": 1}),
                 "thread_count": ("INT", {"default": 4, "min": 1, "max": 20, "step": 1}),
+                "skip_download": ("BOOLEAN", {"default": True}),
             }
         }
 
@@ -192,7 +195,8 @@ class WD_FaceFusion_Video:
             mask_blur=mask_blur,
             face_enhance_blend=face_enhance_blend,
             landmarker_score=landmarker_score,
-            thread_count=thread_count)
+            thread_count=thread_count,
+            skip_download=skip_download)
         return {"ui":{"video":[file,output_path]}, "result": (output_path,)}
 
 
