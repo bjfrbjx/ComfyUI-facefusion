@@ -172,7 +172,7 @@ class WD_FaceFusion_Video:
     CATEGORY = "WDTRIP"
 
     def execute(self, video_url, single_source_image, device, face_detector_score, mask_blur, landmarker_score,
-                face_enhance_blend, thread_count):
+                face_enhance_blend, thread_count,skip_download=True):
         # Download the video to a temporary file
 
         with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as temp_file:
