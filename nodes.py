@@ -268,8 +268,6 @@ class WD_VIDEO2PATH:
     def INPUT_TYPES(s):
         return {"required":{"video":("VIDEO",)}}
 
-
-
     def execute(self,video):
         return (video,)
 
