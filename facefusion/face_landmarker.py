@@ -18,7 +18,7 @@ MODEL_SET : ModelSet =\
 		{
 			'2dfan4':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/2dfan4.hash',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/2dfan4.hash',
 				'path': resolve_relative_path('../.assets/models/2dfan4.hash')
 			}
 		},
@@ -26,7 +26,7 @@ MODEL_SET : ModelSet =\
 		{
 			'2dfan4':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/2dfan4.onnx',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/2dfan4.onnx',
 				'path': resolve_relative_path('../.assets/models/2dfan4.onnx')
 			}
 		},
@@ -38,7 +38,7 @@ MODEL_SET : ModelSet =\
 		{
 			'peppa_wutz':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/peppa_wutz.hash',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/peppa_wutz.hash',
 				'path': resolve_relative_path('../.assets/models/peppa_wutz.hash')
 			}
 		},
@@ -46,7 +46,7 @@ MODEL_SET : ModelSet =\
 		{
 			'peppa_wutz':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/peppa_wutz.onnx',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/peppa_wutz.onnx',
 				'path': resolve_relative_path('../.assets/models/peppa_wutz.onnx')
 			}
 		},
@@ -58,7 +58,7 @@ MODEL_SET : ModelSet =\
 		{
 			'fan_68_5':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/fan_68_5.hash',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/fan_68_5.hash',
 				'path': resolve_relative_path('../.assets/models/fan_68_5.hash')
 			}
 		},
@@ -66,7 +66,7 @@ MODEL_SET : ModelSet =\
 		{
 			'fan_68_5':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/fan_68_5.onnx',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/fan_68_5.onnx',
 				'path': resolve_relative_path('../.assets/models/fan_68_5.onnx')
 			}
 		}

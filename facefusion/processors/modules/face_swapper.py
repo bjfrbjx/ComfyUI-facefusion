@@ -33,7 +33,7 @@ MODEL_SET : ModelSet =\
 		{
 			'face_swapper':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/blendswap_256.hash',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/blendswap_256.hash',
 				'path': resolve_relative_path('../.assets/models/blendswap_256.hash')
 			}
 		},
@@ -41,7 +41,7 @@ MODEL_SET : ModelSet =\
 		{
 			'face_swapper':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/blendswap_256.onnx',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/blendswap_256.onnx',
 				'path': resolve_relative_path('../.assets/models/blendswap_256.onnx')
 			}
 		},
@@ -57,12 +57,12 @@ MODEL_SET : ModelSet =\
 		{
 			'face_swapper':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ghost_1_256.hash',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ghost_1_256.hash',
 				'path': resolve_relative_path('../.assets/models/ghost_1_256.hash')
 			},
 			'embedding_converter':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/arcface_converter_ghost.hash',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/arcface_converter_ghost.hash',
 				'path': resolve_relative_path('../.assets/models/arcface_converter_ghost.hash')
 			}
 		},
@@ -70,12 +70,12 @@ MODEL_SET : ModelSet =\
 		{
 			'face_swapper':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ghost_1_256.onnx',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ghost_1_256.onnx',
 				'path': resolve_relative_path('../.assets/models/ghost_1_256.onnx')
 			},
 			'embedding_converter':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/arcface_converter_ghost.onnx',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/arcface_converter_ghost.onnx',
 				'path': resolve_relative_path('../.assets/models/arcface_converter_ghost.onnx')
 			}
 		},
@@ -91,12 +91,12 @@ MODEL_SET : ModelSet =\
 		{
 			'face_swapper':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ghost_2_256.hash',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ghost_2_256.hash',
 				'path': resolve_relative_path('../.assets/models/ghost_2_256.hash')
 			},
 			'embedding_converter':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/arcface_converter_ghost.hash',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/arcface_converter_ghost.hash',
 				'path': resolve_relative_path('../.assets/models/arcface_converter_ghost.hash')
 			}
 		},
@@ -104,12 +104,12 @@ MODEL_SET : ModelSet =\
 		{
 			'face_swapper':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ghost_2_256.onnx',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ghost_2_256.onnx',
 				'path': resolve_relative_path('../.assets/models/ghost_2_256.onnx')
 			},
 			'embedding_converter':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/arcface_converter_ghost.onnx',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/arcface_converter_ghost.onnx',
 				'path': resolve_relative_path('../.assets/models/arcface_converter_ghost.onnx')
 			}
 		},
@@ -125,12 +125,12 @@ MODEL_SET : ModelSet =\
 		{
 			'face_swapper':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ghost_3_256.hash',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ghost_3_256.hash',
 				'path': resolve_relative_path('../.assets/models/ghost_3_256.hash')
 			},
 			'embedding_converter':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/arcface_converter_ghost.hash',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/arcface_converter_ghost.hash',
 				'path': resolve_relative_path('../.assets/models/arcface_converter_ghost.hash')
 			}
 		},
@@ -138,12 +138,12 @@ MODEL_SET : ModelSet =\
 		{
 			'face_swapper':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ghost_3_256.onnx',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ghost_3_256.onnx',
 				'path': resolve_relative_path('../.assets/models/ghost_3_256.onnx')
 			},
 			'embedding_converter':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/arcface_converter_ghost.onnx',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/arcface_converter_ghost.onnx',
 				'path': resolve_relative_path('../.assets/models/arcface_converter_ghost.onnx')
 			}
 		},
@@ -159,7 +159,7 @@ MODEL_SET : ModelSet =\
 		{
 			'face_swapper':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/inswapper_128.hash',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/inswapper_128.hash',
 				'path': resolve_relative_path('../.assets/models/inswapper_128.hash')
 			}
 		},
@@ -167,7 +167,7 @@ MODEL_SET : ModelSet =\
 		{
 			'face_swapper':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/inswapper_128.onnx',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/inswapper_128.onnx',
 				'path': resolve_relative_path('../.assets/models/inswapper_128.onnx')
 			}
 		},
@@ -183,7 +183,7 @@ MODEL_SET : ModelSet =\
 		{
 			'face_swapper':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/inswapper_128_fp16.hash',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/inswapper_128_fp16.hash',
 				'path': resolve_relative_path('../.assets/models/inswapper_128_fp16.hash')
 			}
 		},
@@ -191,7 +191,7 @@ MODEL_SET : ModelSet =\
 		{
 			'face_swapper':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/inswapper_128_fp16.onnx',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/inswapper_128_fp16.onnx',
 				'path': resolve_relative_path('../.assets/models/inswapper_128_fp16.onnx')
 			}
 		},
@@ -207,12 +207,12 @@ MODEL_SET : ModelSet =\
 		{
 			'face_swapper':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/simswap_256.hash',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/simswap_256.hash',
 				'path': resolve_relative_path('../.assets/models/simswap_256.hash')
 			},
 			'embedding_converter':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/arcface_converter_simswap.hash',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/arcface_converter_simswap.hash',
 				'path': resolve_relative_path('../.assets/models/arcface_converter_simswap.hash')
 			}
 		},
@@ -220,12 +220,12 @@ MODEL_SET : ModelSet =\
 		{
 			'face_swapper':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/simswap_256.onnx',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/simswap_256.onnx',
 				'path': resolve_relative_path('../.assets/models/simswap_256.onnx')
 			},
 			'embedding_converter':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/arcface_converter_simswap.onnx',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/arcface_converter_simswap.onnx',
 				'path': resolve_relative_path('../.assets/models/arcface_converter_simswap.onnx')
 			}
 		},
@@ -241,12 +241,12 @@ MODEL_SET : ModelSet =\
 		{
 			'face_swapper':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/simswap_unofficial_512.hash',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/simswap_unofficial_512.hash',
 				'path': resolve_relative_path('../.assets/models/simswap_unofficial_512.hash')
 			},
 			'embedding_converter':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/arcface_converter_simswap.hash',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/arcface_converter_simswap.hash',
 				'path': resolve_relative_path('../.assets/models/arcface_converter_simswap.hash')
 			}
 		},
@@ -254,12 +254,12 @@ MODEL_SET : ModelSet =\
 		{
 			'face_swapper':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/simswap_unofficial_512.onnx',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/simswap_unofficial_512.onnx',
 				'path': resolve_relative_path('../.assets/models/simswap_unofficial_512.onnx')
 			},
 			'embedding_converter':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/arcface_converter_simswap.onnx',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/arcface_converter_simswap.onnx',
 				'path': resolve_relative_path('../.assets/models/arcface_converter_simswap.onnx')
 			}
 		},
@@ -275,7 +275,7 @@ MODEL_SET : ModelSet =\
 		{
 			'face_swapper':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/uniface_256.hash',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/uniface_256.hash',
 				'path': resolve_relative_path('../.assets/models/uniface_256.hash')
 			}
 		},
@@ -283,7 +283,7 @@ MODEL_SET : ModelSet =\
 		{
 			'face_swapper':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/uniface_256.onnx',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/uniface_256.onnx',
 				'path': resolve_relative_path('../.assets/models/uniface_256.onnx')
 			}
 		},

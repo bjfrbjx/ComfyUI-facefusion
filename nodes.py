@@ -3,6 +3,7 @@ import urllib.request
 
 from PIL import Image
 
+from facefusion.core import common_pre_check
 from facefusion.face_analyser import get_many_faces, get_one_face
 from facefusion.face_store import append_reference_face, clear_reference_faces
 
@@ -41,6 +42,8 @@ def empty_torch():
     except:
         pass
 
+
+common_pre_check()
 
 def facefusion_run(source_path, target_path: str, output_path, provider, face_selector_mode, reference_face_position,
                    reference_face_distance, detector_score=0.6, mask_blur=0.3,
@@ -108,7 +111,7 @@ def facefusion_run(source_path, target_path: str, output_path, provider, face_se
         apply_state_item('output_video_fps', int(detect_video_fps(target_path)))
     from facefusion.core import processors_pre_check,common_pre_check
     import numpy as np
-    if common_pre_check() and processors_pre_check():
+    if processors_pre_check():
         if reference_face_image is not None:
             pil_img:Image.Image = tensor_to_pil(img_tensor=reference_face_image).convert("RGB")
             from facefusion.face_selector import sort_and_filter_faces
@@ -191,7 +194,7 @@ class WD_FaceFusion_Video:
                 "single_source_image": ("IMAGE",),  # Single source image
                 "device": (["cpu", "cuda"], {"default": "cuda"}),  # Execution provider
                 "video_url": ("STRING", {
-                    "default": "https://wdduoduo-videos.oss-cn-hangzhou.aliyuncs.com/test/None/painter/pose7_20241114183403.mp4",
+                    "default": "https://exsample.mp4",
                     "defaultBehavior": "input"
                 }),
                 "face_detector_score": ("FLOAT", {"default": 0.65, "min": 0, "max": 1, "step": 0.02}),

@@ -26,7 +26,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_colorizer':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ddcolor.hash',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ddcolor.hash',
 				'path': resolve_relative_path('../.assets/models/ddcolor.hash')
 			}
 		},
@@ -34,7 +34,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_colorizer':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ddcolor.onnx',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ddcolor.onnx',
 				'path': resolve_relative_path('../.assets/models/ddcolor.onnx')
 			}
 		},
@@ -46,7 +46,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_colorizer':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ddcolor_artistic.hash',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ddcolor_artistic.hash',
 				'path': resolve_relative_path('../.assets/models/ddcolor_artistic.hash')
 			}
 		},
@@ -54,7 +54,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_colorizer':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ddcolor_artistic.onnx',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ddcolor_artistic.onnx',
 				'path': resolve_relative_path('../.assets/models/ddcolor_artistic.onnx')
 			}
 		},
@@ -66,7 +66,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_colorizer':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/deoldify.hash',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/deoldify.hash',
 				'path': resolve_relative_path('../.assets/models/deoldify.hash')
 			}
 		},
@@ -74,7 +74,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_colorizer':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/deoldify.onnx',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/deoldify.onnx',
 				'path': resolve_relative_path('../.assets/models/deoldify.onnx')
 			}
 		},
@@ -86,7 +86,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_colorizer':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/deoldify_artistic.hash',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/deoldify_artistic.hash',
 				'path': resolve_relative_path('../.assets/models/deoldify_artistic.hash')
 			}
 		},
@@ -94,7 +94,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_colorizer':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/deoldify_artistic.onnx',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/deoldify_artistic.onnx',
 				'path': resolve_relative_path('../.assets/models/deoldify_artistic.onnx')
 			}
 		},
@@ -106,7 +106,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_colorizer':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/deoldify_stable.hash',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/deoldify_stable.hash',
 				'path': resolve_relative_path('../.assets/models/deoldify_stable.hash')
 			}
 		},
@@ -114,7 +114,7 @@ MODEL_SET : ModelSet =\
 		{
 			'frame_colorizer':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/deoldify_stable.onnx',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/deoldify_stable.onnx',
 				'path': resolve_relative_path('../.assets/models/deoldify_stable.onnx')
 			}
 		},

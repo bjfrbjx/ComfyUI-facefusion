@@ -33,7 +33,7 @@ MODEL_SET : ModelSet =\
 		{
 			'age_modifier':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/styleganex_age.hash',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/styleganex_age.hash',
 				'path': resolve_relative_path('../.assets/models/styleganex_age.hash')
 			}
 		},
@@ -41,7 +41,7 @@ MODEL_SET : ModelSet =\
 		{
 			'age_modifier':
 			{
-				'url': 'https://gitproxy.click/https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/styleganex_age.onnx',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/styleganex_age.onnx',
 				'path': resolve_relative_path('../.assets/models/styleganex_age.onnx')
 			}
 		},
