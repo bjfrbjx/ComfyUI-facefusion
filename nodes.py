@@ -259,14 +259,29 @@ class WD_FaceFusion_Video:
                        )
         return {"ui":{"video":[file,output_path]}, "result": (output_path,)}
 
+class WD_VIDEO2PATH:
+    RETURN_TYPES = ("PATH",)
+    RETURN_NAMES = ("path",)
+    FUNCTION = "execute"
+    CATEGORY = "WDTRIP"
+    @classmethod
+    def INPUT_TYPES(s):
+        return {"required":{"video":("VIDEO",)}}
+
+
+
+    def execute(self,video):
+        return (video,)
 
 
 NODE_CLASS_MAPPINGS = {
     "WD_FaceFusion": WD_FaceFusion,
     "WD_FaceFusion_Video": WD_FaceFusion_Video,
+    "WD_VIDEO2PATH":WD_VIDEO2PATH,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "WD_FaceFusion": "WD_FaceFusion",
     "WD_FaceFusion_Video": "WD_FaceFusion_Video",
+    "WD_VIDEO2PATH":"WD_VIDEO2PATH"
 }
