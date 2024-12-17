@@ -3,7 +3,7 @@ import urllib.request
 
 from PIL import Image
 
-from facefusion.core import common_pre_check
+from facefusion.core import common_pre_check, conditional_append_reference_faces
 from facefusion.face_analyser import get_many_faces, get_one_face
 from facefusion.face_store import append_reference_face, clear_reference_faces
 
@@ -376,9 +376,13 @@ class WD_FaceFusion_Video2:
         from facefusion.vision import pack_resolution, restrict_video_resolution, unpack_resolution, restrict_video_fps
         from facefusion.processors.core import get_processors_modules
         from facefusion.ffmpeg import extract_frames
+        for processor_module in get_processors_modules(state_manager.get_item('processors')):
+            if not processor_module.pre_process('output'):
+                return None
+        conditional_append_reference_faces()
         if analyse_video(state_manager.get_item('target_path'), state_manager.get_item('trim_frame_start'),
                          state_manager.get_item('trim_frame_end')):
-            return 3
+            return None
         # clear temp
         logger.debug(wording.get('clearing_temp'), __name__)
         clear_temp_directory(state_manager.get_item('target_path'))
