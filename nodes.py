@@ -410,7 +410,7 @@ class WD_FaceFusion_Video2:
         import numpy as np, cv2
         imgs = np.stack([cv2.imread(i) for i in temp_frame_paths]) / 255.
         clear_temp_directory(state_manager.get_item('target_path'))
-        return torch.from_numpy(imgs[..., ::-1])
+        return torch.from_numpy(imgs[..., ::-1].copy())
 
 class WD_VIDEO2PATH:
     RETURN_TYPES = ("PATH",)
