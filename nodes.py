@@ -16,7 +16,9 @@ urllib.request.install_opener(opener)
 from .utils import batch_tensor_to_pil, batched_pil_to_tensor, tensor_to_pil
 import tempfile, requests, uuid, os
 
+from facefusion.core import conditional_process
 try:
+    import torch
     import folder_paths
 except:
     folder_paths = None
@@ -43,16 +45,31 @@ def empty_torch():
         pass
 
 
+def debug(time):
+
+    try:
+        from facefusion.inference_manager import INFERENCE_POOLS
+        inf=INFERENCE_POOLS['cli']['facefusion.face_detector.yoloface.cuda']["yoloface"]
+        onnxruntime_provide=inf._providers
+    except:
+        onnxruntime_provide="cpu"
+
+    return f"info:[onnx:{onnxruntime_provide}]\n[download_time:{time}]"
+
 common_pre_check()
 
+
+
+
+
+
 def facefusion_run(source_path, target_path: str, output_path, provider, face_selector_mode, reference_face_position,
-                   reference_face_distance, detector_score=0.6, mask_blur=0.3,
+                   reference_face_distance, working=conditional_process,detector_score=0.6, mask_blur=0.3,
                    face_enhance_blend=0., landmarker_score=0.5, thread_count=1, face_selector_order=None,
                    reference_face_image=None):
     from facefusion.vision import detect_image_resolution, pack_resolution, detect_video_resolution, detect_video_fps
     from facefusion.filesystem import is_video, is_image
     from facefusion import state_manager
-    from facefusion.core import conditional_process
     the_processors = ['face_swapper', ]
     if face_enhance_blend > 0.:
         the_processors.append('face_enhancer')
@@ -109,8 +126,9 @@ def facefusion_run(source_path, target_path: str, output_path, provider, face_se
         video_resolution = detect_video_resolution(target_path)
         apply_state_item('output_video_resolution', pack_resolution(video_resolution))
         apply_state_item('output_video_fps', int(detect_video_fps(target_path)))
-    from facefusion.core import processors_pre_check,common_pre_check
+    from facefusion.core import processors_pre_check
     import numpy as np
+    res=None
     if processors_pre_check():
         if reference_face_image is not None:
             pil_img:Image.Image = tensor_to_pil(img_tensor=reference_face_image).convert("RGB")
@@ -119,9 +137,12 @@ def facefusion_run(source_path, target_path: str, output_path, provider, face_se
             reference_faces = sort_and_filter_faces(get_many_faces([reference_frame]))
             reference_face = get_one_face(reference_faces)
             append_reference_face('reference', reference_face)
-        conditional_process()
+        res=working()
         clear_reference_faces()
     empty_torch()
+    if isinstance(res,torch.Tensor):
+        return res
+    return output_path
 
 
 class WD_FaceFusion:
@@ -216,8 +237,8 @@ class WD_FaceFusion_Video:
             }
         }
 
-    RETURN_TYPES = ("PATH",)
-    RETURN_NAMES = ("scenes_video",)
+    RETURN_TYPES = ("PATH","STRING")
+    RETURN_NAMES = ("scenes_video","DEBUG_STR")
     FUNCTION = "execute"
     CATEGORY = "WDTRIP"
 
@@ -229,11 +250,16 @@ class WD_FaceFusion_Video:
             raise ValueError("Either video_url or video path must be provided")
         if video is not None:
             target_path = video
+            time_sec=0
         else:
+            import time
             with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as temp_file:
+                start=time.time()
                 response = requests.get(video_url.strip(), stream=True)
                 for chunk in response.iter_content(chunk_size=8192):
                     temp_file.write(chunk)
+                end = time.time()
+            time_sec=int(end-start)
             target_path = temp_file.name
         output_dir = folder_paths.get_output_directory()
         full_output_folder, filename, _, subfolder, _, = folder_paths.get_save_image_path("WD_", output_dir)
@@ -257,7 +283,134 @@ class WD_FaceFusion_Video:
             reference_face_distance=reference_face_distance,
             reference_face_image=reference_face_image
                        )
-        return {"ui":{"video":[file,output_path]}, "result": (output_path,)}
+        return {"ui":{"video":[file,output_path]}, "result": (output_path,debug(time_sec))}
+
+
+class WD_FaceFusion_Video2:
+    OUTPUT_NODE = True
+
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "single_source_image": ("IMAGE",),  # Single source image
+                "device": (["cpu", "cuda"], {"default": "cuda"}),  # Execution provider
+                "video_url": ("STRING", {
+                    "default": "https://exsample.mp4",
+                    "defaultBehavior": "input"
+                }),
+                "face_detector_score": ("FLOAT", {"default": 0.65, "min": 0, "max": 1, "step": 0.02}),
+                # Face detector score
+                "mask_blur": ("FLOAT", {"default": 0.7, "min": 0, "max": 1, "step": 0.05}),  # Face mask blur
+                "landmarker_score": ("FLOAT", {"default": 0.5, "min": 0, "max": 1, "step": 0.05}),
+                # Face landmarker score
+                "face_enhance_blend": ("FLOAT", {"default": 30, "min": 0, "max": 100, "step": 1}),
+                "thread_count": ("INT", {"default": 4, "min": 1, "max": 20, "step": 1}),
+                "face_selector_order": (["large-small", "small-large", "bottom-top", "top-bottom", "right-left", "left-right"],
+                               {"default": "large-small"}),
+                "face_selector_mode": (['many', 'one', 'reference'], {"default": "reference"}),
+                "reference_face_position": ("INT",{"default": 0}),
+                "reference_face_distance": ("FLOAT", {"max": 2.0, "min": 0.0,"default": 0.6}),
+            },
+            "optional": {
+                "video": ("PATH",),
+                "reference_face_image": ("IMAGE",)
+            }
+        }
+
+    RETURN_TYPES = ("IMAGE","FLOAT","STRING")
+    RETURN_NAMES = ("images","fps","debug_str")
+    FUNCTION = "execute"
+    CATEGORY = "WDTRIP"
+
+    def execute(self, video_url, single_source_image, device, face_detector_score, mask_blur, landmarker_score,
+                face_enhance_blend, thread_count, face_selector_order, face_selector_mode, reference_face_position,
+                reference_face_distance, video=None,reference_face_image=None):
+        # Download the video to a temporary file
+        if video is None and (video_url is None or video_url.strip() == ""):
+            raise ValueError("Either video_url or video path must be provided")
+        if video is not None:
+            target_path = video
+            time_sec=0
+        else:
+            import time
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as temp_file:
+                start=time.time()
+                response = requests.get(video_url.strip(), stream=True)
+                for chunk in response.iter_content(chunk_size=8192):
+                    temp_file.write(chunk)
+                end = time.time()
+            time_sec=int(end-start)
+            target_path = temp_file.name
+        output_dir = folder_paths.get_output_directory()
+        full_output_folder, filename, _, subfolder, _, = folder_paths.get_save_image_path("WD_", output_dir)
+        file = f"{uuid.uuid4()}.{target_path.split('.')[-1]}"
+        output_path = os.path.join(full_output_folder, file)
+        source_path = tempfile.NamedTemporaryFile(delete=False, suffix=".png").name
+        tensor_to_pil(single_source_image).save(source_path)
+        source_paths = [source_path]
+        from facefusion.vision import detect_video_fps
+        fps=detect_video_fps(target_path)
+        images=facefusion_run(source_paths,
+            target_path,
+            output_path,
+            working=self.process_video2,
+            provider=[device],
+            detector_score=face_detector_score,
+            mask_blur=mask_blur,
+            face_enhance_blend=face_enhance_blend,
+            landmarker_score=landmarker_score,
+            thread_count=thread_count,
+            face_selector_order=face_selector_order,
+            face_selector_mode=face_selector_mode,
+            reference_face_position=reference_face_position,
+            reference_face_distance=reference_face_distance,
+            reference_face_image=reference_face_image
+                       )
+        return (images,fps,debug(time_sec))
+
+    def process_video2(self):
+        from facefusion.content_analyser import analyse_video
+        from facefusion import wording, logger, state_manager, process_manager
+        from facefusion.temp_helper import clear_temp_directory, create_temp_directory, get_temp_frame_paths
+        from facefusion.vision import pack_resolution, restrict_video_resolution, unpack_resolution, restrict_video_fps
+        from facefusion.processors.core import get_processors_modules
+        from facefusion.ffmpeg import extract_frames
+        if analyse_video(state_manager.get_item('target_path'), state_manager.get_item('trim_frame_start'),
+                         state_manager.get_item('trim_frame_end')):
+            return 3
+        # clear temp
+        logger.debug(wording.get('clearing_temp'), __name__)
+        clear_temp_directory(state_manager.get_item('target_path'))
+        # create temp
+        logger.debug(wording.get('creating_temp'), __name__)
+        create_temp_directory(state_manager.get_item('target_path'))
+        # extract frames
+        process_manager.start()
+        temp_video_resolution = pack_resolution(restrict_video_resolution(state_manager.get_item('target_path'),
+                                                                          unpack_resolution(state_manager.get_item(
+                                                                              'output_video_resolution'))))
+        temp_video_fps = restrict_video_fps(state_manager.get_item('target_path'),
+                                            state_manager.get_item('output_video_fps'))
+        logger.info(wording.get('extracting_frames').format(resolution=temp_video_resolution, fps=temp_video_fps),
+                    __name__)
+        if extract_frames(state_manager.get_item('target_path'), temp_video_resolution, temp_video_fps):
+            logger.debug(wording.get('extracting_frames_succeed'), __name__)
+        else:
+            process_manager.end()
+            return None
+        # process frames
+        temp_frame_paths = get_temp_frame_paths(state_manager.get_item('target_path'))
+        if temp_frame_paths:
+            for processor_module in get_processors_modules(state_manager.get_item('processors')):
+                logger.info(wording.get('processing'), processor_module.__name__)
+                processor_module.process_video(state_manager.get_item('source_paths'), temp_frame_paths)
+                processor_module.post_process()
+        process_manager.end()
+        import numpy as np, cv2
+        imgs = np.stack([cv2.imread(i) for i in temp_frame_paths]) / 255.
+        clear_temp_directory(state_manager.get_item('target_path'))
+        return torch.from_numpy(imgs[..., ::-1])
 
 class WD_VIDEO2PATH:
     RETURN_TYPES = ("PATH",)
@@ -275,11 +428,13 @@ class WD_VIDEO2PATH:
 NODE_CLASS_MAPPINGS = {
     "WD_FaceFusion": WD_FaceFusion,
     "WD_FaceFusion_Video": WD_FaceFusion_Video,
+    "WD_FaceFusion_Video2": WD_FaceFusion_Video2,
     "WD_VIDEO2PATH":WD_VIDEO2PATH,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "WD_FaceFusion": "WD_FaceFusion",
     "WD_FaceFusion_Video": "WD_FaceFusion_Video",
+    "WD_FaceFusion_Video2": "WD_FaceFusion_Video2",
     "WD_VIDEO2PATH":"WD_VIDEO2PATH"
 }
