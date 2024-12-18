@@ -118,6 +118,7 @@ def facefusion_run(source_path, target_path: str, output_path, provider, face_se
     apply_state_item('open_browser', False, )
     apply_state_item('execution_queue_count', 1, )
     apply_state_item('video_memory_strategy', None, )
+    apply_state_item('face_mask_regions',['skin', 'left-eyebrow', 'right-eyebrow', 'left-eye', 'right-eye', 'glasses', 'nose', 'mouth', 'upper-lip', 'lower-lip' ])
     # apply_state_item('execution_device_id', '0')
     if is_image(image_path=target_path):
         image_resolution = detect_image_resolution(target_path)
