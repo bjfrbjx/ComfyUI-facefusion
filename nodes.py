@@ -218,14 +218,14 @@ class WD_FaceFusion_Video:
     def INPUT_TYPES(s):
         return {
             "required": {
-                "video_url": ("STRING", {
-                    "default": "https://exsample.mp4",
-                    "defaultBehavior": "input"
-                }),
                 **common_input_dict
             },
             "optional": {
                 "video": ("PATH",),
+                "video_url": ("STRING", {
+                    "default": "https://exsample.mp4",
+                    "defaultBehavior": "input"
+                }),
                 "reference_face_image": ("IMAGE",)
             }
         }
@@ -287,14 +287,14 @@ class WD_FaceFusion_Video2:
     def INPUT_TYPES(s):
         return {
             "required": {
-                "video_url": ("STRING", {
-                    "default": "https://exsample.mp4",
-                    "defaultBehavior": "input"
-                }),
                 **common_input_dict
             },
             "optional": {
                 "video": ("PATH",),
+                "video_url": ("STRING", {
+                    "default": "https://exsample.mp4",
+                    "defaultBehavior": "input"
+                }),
                 "reference_face_image": ("IMAGE",)
             }
         }
