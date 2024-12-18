@@ -394,7 +394,8 @@ class WD_FaceFusion_Video2:
                 processor_module.post_process()
         process_manager.end()
         import numpy as np, cv2
-        imgs = np.stack([cv2.imread(i) for i in temp_frame_paths]) / 255.
+        from facefusion.vision import cv2imread
+        imgs = np.stack([cv2imread(i) for i in temp_frame_paths]) / 255.
         clear_temp_directory(state_manager.get_item('target_path'))
         return torch.from_numpy(imgs[..., ::-1].copy())
 

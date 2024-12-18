@@ -24,12 +24,14 @@ def read_static_images(image_paths : List[str]) -> List[VisionFrame]:
 			frames.append(read_static_image(image_path))
 	return frames
 
-
+def cv2imread(filename):
+	import numpy as np
+	return cv2.imdecode(np.fromfile(filename, dtype=np.uint8), -1)
 def read_image(image_path : str) -> Optional[VisionFrame]:
 	if is_image(image_path):
 		if is_windows():
 			image_path = sanitize_path_for_windows(image_path)
-		return cv2.imread(image_path)
+		return cv2imread(image_path)
 	return None
 
 
