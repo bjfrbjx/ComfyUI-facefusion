@@ -23,7 +23,7 @@ try:
 except:
     folder_paths = None
 
-
+from facefusion.choices import face_mask_types,face_selector_orders,face_selector_modes
 # =================================
 def get_mime_type(file_path):
     # 获取文件的 MIME 类型
@@ -59,7 +59,22 @@ def debug(time):
 common_pre_check()
 
 
-
+common_input_dict={
+    "single_source_image": ("IMAGE",),  # Single source image
+    "device": (["cpu", "cuda"], {"default": "cuda"}),  # Execution provider
+    "face_detector_score": ("FLOAT", {"default": 0.65, "min": 0, "max": 1, "step": 0.02}),
+    "face_mask_types": (face_mask_types, {"default": face_mask_types[0]}),
+    # Face detector score
+    "mask_blur": ("FLOAT", {"default": 0.7, "min": 0, "max": 1, "step": 0.05}),  # Face mask blur
+    "landmarker_score": ("FLOAT", {"default": 0.5, "min": 0, "max": 1, "step": 0.05}),
+    # Face landmarker score
+    "face_enhance_blend": ("FLOAT", {"default": 30, "min": 0, "max": 100, "step": 1}),
+    "thread_count": ("INT", {"default": 4, "min": 1, "max": 20, "step": 1}),
+    "face_selector_order": (face_selector_orders,{"default": face_selector_orders[0]}),
+    "face_selector_mode": (face_selector_modes, {"default": face_selector_modes[0]}),
+    "reference_face_position": ("INT", {"default": 0}),
+    "reference_face_distance": ("FLOAT", {"max": 2.0, "min": 0.0, "default": 0.6}),
+}
 
 
 
@@ -152,20 +167,7 @@ class WD_FaceFusion:
         return {
             "required": {
                 "image": ("IMAGE",),
-                "single_source_image": ("IMAGE",),  # Single source image
-                "device": (["cpu", "cuda"], {"default": "cuda"}),  # Execution provider
-                "face_detector_score": ("FLOAT", {"default": 0.65, "min": 0, "max": 1, "step": 0.02}),
-                "face_mask_types": (['box', 'occlusion', 'region'], {"default": "box"}),
-                # Face detector score
-                "mask_blur": ("FLOAT", {"default": 0.7, "min": 0, "max": 1, "step": 0.05}),  # Face mask blur
-                "landmarker_score": ("FLOAT", {"default": 0.5, "min": 0, "max": 1, "step": 0.05}),
-                # Face landmarker score
-                "face_enhance_blend": ("FLOAT", {"default": 30, "min": 0, "max": 100, "step": 1}),
-                "face_selector_order": (["large-small", "small-large", "bottom-top", "top-bottom", "right-left", "left-right"],
-                               {"default": "large-small"}),
-                "face_selector_mode": (['many', 'one', 'reference'], {"default": "reference"}),
-                "reference_face_position": ("INT",{"default": 0}),
-                "reference_face_distance": ("FLOAT", {"max": 2.0, "min": 0.0,"default": 0.6}),
+                **common_input_dict
             },
             "optional": {"reference_face_image": ("IMAGE", )}
         }
@@ -216,25 +218,11 @@ class WD_FaceFusion_Video:
     def INPUT_TYPES(s):
         return {
             "required": {
-                "single_source_image": ("IMAGE",),  # Single source image
-                "device": (["cpu", "cuda"], {"default": "cuda"}),  # Execution provider
                 "video_url": ("STRING", {
                     "default": "https://exsample.mp4",
                     "defaultBehavior": "input"
                 }),
-                "face_detector_score": ("FLOAT", {"default": 0.65, "min": 0, "max": 1, "step": 0.02}),
-                "face_mask_types": (['box', 'occlusion', 'region'], {"default": "box"}),
-                # Face detector score
-                "mask_blur": ("FLOAT", {"default": 0.7, "min": 0, "max": 1, "step": 0.05}),  # Face mask blur
-                "landmarker_score": ("FLOAT", {"default": 0.5, "min": 0, "max": 1, "step": 0.05}),
-                # Face landmarker score
-                "face_enhance_blend": ("FLOAT", {"default": 30, "min": 0, "max": 100, "step": 1}),
-                "thread_count": ("INT", {"default": 4, "min": 1, "max": 20, "step": 1}),
-                "face_selector_order": (["large-small", "small-large", "bottom-top", "top-bottom", "right-left", "left-right"],
-                               {"default": "large-small"}),
-                "face_selector_mode": (['many', 'one', 'reference'], {"default": "reference"}),
-                "reference_face_position": ("INT",{"default": 0}),
-                "reference_face_distance": ("FLOAT", {"max": 2.0, "min": 0.0,"default": 0.6}),
+                **common_input_dict
             },
             "optional": {
                 "video": ("PATH",),
@@ -299,25 +287,11 @@ class WD_FaceFusion_Video2:
     def INPUT_TYPES(s):
         return {
             "required": {
-                "single_source_image": ("IMAGE",),  # Single source image
-                "device": (["cpu", "cuda"], {"default": "cuda"}),  # Execution provider
                 "video_url": ("STRING", {
                     "default": "https://exsample.mp4",
                     "defaultBehavior": "input"
                 }),
-                "face_detector_score": ("FLOAT", {"default": 0.65, "min": 0, "max": 1, "step": 0.02}),
-                "face_mask_types":(['box', 'occlusion', 'region' ],{"default": "box"}),
-                # Face detector score
-                "mask_blur": ("FLOAT", {"default": 0.7, "min": 0, "max": 1, "step": 0.05}),  # Face mask blur
-                "landmarker_score": ("FLOAT", {"default": 0.5, "min": 0, "max": 1, "step": 0.05}),
-                # Face landmarker score
-                "face_enhance_blend": ("FLOAT", {"default": 30, "min": 0, "max": 100, "step": 1}),
-                "thread_count": ("INT", {"default": 4, "min": 1, "max": 20, "step": 1}),
-                "face_selector_order": (["large-small", "small-large", "bottom-top", "top-bottom", "right-left", "left-right"],
-                               {"default": "large-small"}),
-                "face_selector_mode": (['many', 'one', 'reference'], {"default": "reference"}),
-                "reference_face_position": ("INT",{"default": 0}),
-                "reference_face_distance": ("FLOAT", {"max": 2.0, "min": 0.0,"default": 0.6}),
+                **common_input_dict
             },
             "optional": {
                 "video": ("PATH",),
