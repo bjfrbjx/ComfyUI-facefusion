@@ -62,9 +62,9 @@ def render() -> gradio.Blocks:
 					instant_runner.render()
 					job_runner.render()
 					job_manager.render()
-			with gradio.Column(scale = 7):
-				with gradio.Blocks():
-					preview.render()
+			with gradio.Column(scale = 6):
+				# with gradio.Blocks():
+				# 	preview.render()
 				with gradio.Blocks():
 					trim_frame.render()
 				with gradio.Blocks():

@@ -66,7 +66,7 @@ common_pre_check()
 def facefusion_run(source_path, target_path: str, output_path, provider, face_selector_mode, reference_face_position,
                    reference_face_distance, working=conditional_process,detector_score=0.6, mask_blur=0.3,
                    face_enhance_blend=0., landmarker_score=0.5, thread_count=1, face_selector_order=None,
-                   reference_face_image=None):
+                   reference_face_image=None,face_mask_types='box'):
     from facefusion.vision import detect_image_resolution, pack_resolution, detect_video_resolution, detect_video_fps
     from facefusion.filesystem import is_video, is_image
     from facefusion import state_manager
@@ -97,7 +97,7 @@ def facefusion_run(source_path, target_path: str, output_path, provider, face_se
     apply_state_item('face_detector_size', '640x640', )
     apply_state_item('face_landmarker_model', '2dfan4', )
     apply_state_item('reference_frame_number', 0, )
-    apply_state_item('face_mask_types', ['box'], )
+    apply_state_item('face_mask_types', [face_mask_types], )
     apply_state_item('face_mask_padding', (0, 0, 0, 0), )
     apply_state_item('temp_frame_format', 'png', )
     apply_state_item('output_image_quality', 80, )
@@ -154,6 +154,7 @@ class WD_FaceFusion:
                 "single_source_image": ("IMAGE",),  # Single source image
                 "device": (["cpu", "cuda"], {"default": "cuda"}),  # Execution provider
                 "face_detector_score": ("FLOAT", {"default": 0.65, "min": 0, "max": 1, "step": 0.02}),
+                "face_mask_types": (['box', 'occlusion', 'region'], {"default": "box"}),
                 # Face detector score
                 "mask_blur": ("FLOAT", {"default": 0.7, "min": 0, "max": 1, "step": 0.05}),  # Face mask blur
                 "landmarker_score": ("FLOAT", {"default": 0.5, "min": 0, "max": 1, "step": 0.05}),
@@ -173,7 +174,8 @@ class WD_FaceFusion:
     CATEGORY = "WDTRIP"
 
     def execute(self, image, single_source_image, device, face_detector_score, mask_blur, landmarker_score,
-                face_enhance_blend,face_selector_order,face_selector_mode,reference_face_position,reference_face_distance,reference_face_image=None):
+                face_enhance_blend,face_selector_order,face_selector_mode,reference_face_position,reference_face_distance,
+                face_mask_types,reference_face_image=None):
         source_path = tempfile.NamedTemporaryFile(delete=False, suffix=".png").name
         tensor_to_pil(single_source_image).save(source_path)
         source_paths = [source_path]
@@ -199,6 +201,7 @@ class WD_FaceFusion:
             face_selector_mode=face_selector_mode,
             reference_face_position=reference_face_position,
             reference_face_distance=reference_face_distance,
+            face_mask_types=face_mask_types,
             reference_face_image=reference_face_image
             )
         result = batched_pil_to_tensor([Image.open(output_path)])
@@ -219,6 +222,7 @@ class WD_FaceFusion_Video:
                     "defaultBehavior": "input"
                 }),
                 "face_detector_score": ("FLOAT", {"default": 0.65, "min": 0, "max": 1, "step": 0.02}),
+                "face_mask_types": (['box', 'occlusion', 'region'], {"default": "box"}),
                 # Face detector score
                 "mask_blur": ("FLOAT", {"default": 0.7, "min": 0, "max": 1, "step": 0.05}),  # Face mask blur
                 "landmarker_score": ("FLOAT", {"default": 0.5, "min": 0, "max": 1, "step": 0.05}),
@@ -244,7 +248,7 @@ class WD_FaceFusion_Video:
 
     def execute(self, video_url, single_source_image, device, face_detector_score, mask_blur, landmarker_score,
                 face_enhance_blend, thread_count, face_selector_order, face_selector_mode, reference_face_position,
-                reference_face_distance, video=None,reference_face_image=None):
+                face_mask_types,reference_face_distance, video=None,reference_face_image=None):
         # Download the video to a temporary file
         if video is None and (video_url is None or video_url.strip() == ""):
             raise ValueError("Either video_url or video path must be provided")
@@ -281,6 +285,7 @@ class WD_FaceFusion_Video:
             face_selector_mode=face_selector_mode,
             reference_face_position=reference_face_position,
             reference_face_distance=reference_face_distance,
+            face_mask_types=face_mask_types,
             reference_face_image=reference_face_image
                        )
         return {"ui":{"video":[file,output_path]}, "result": (output_path,debug(time_sec))}
@@ -300,6 +305,7 @@ class WD_FaceFusion_Video2:
                     "defaultBehavior": "input"
                 }),
                 "face_detector_score": ("FLOAT", {"default": 0.65, "min": 0, "max": 1, "step": 0.02}),
+                "face_mask_types":(['box', 'occlusion', 'region' ],{"default": "box"}),
                 # Face detector score
                 "mask_blur": ("FLOAT", {"default": 0.7, "min": 0, "max": 1, "step": 0.05}),  # Face mask blur
                 "landmarker_score": ("FLOAT", {"default": 0.5, "min": 0, "max": 1, "step": 0.05}),
@@ -325,7 +331,7 @@ class WD_FaceFusion_Video2:
 
     def execute(self, video_url, single_source_image, device, face_detector_score, mask_blur, landmarker_score,
                 face_enhance_blend, thread_count, face_selector_order, face_selector_mode, reference_face_position,
-                reference_face_distance, video=None,reference_face_image=None):
+                face_mask_types,reference_face_distance, video=None,reference_face_image=None):
         # Download the video to a temporary file
         if video is None and (video_url is None or video_url.strip() == ""):
             raise ValueError("Either video_url or video path must be provided")
@@ -365,6 +371,7 @@ class WD_FaceFusion_Video2:
             face_selector_mode=face_selector_mode,
             reference_face_position=reference_face_position,
             reference_face_distance=reference_face_distance,
+            face_mask_types=face_mask_types,
             reference_face_image=reference_face_image
                        )
         return (images,fps,debug(time_sec))
