@@ -63,7 +63,6 @@ common_input_dict={
     "single_source_image": ("IMAGE",),  # Single source image
     "device": (["cpu", "cuda"], {"default": "cuda"}),  # Execution provider
     "face_detector_score": ("FLOAT", {"default": 0.65, "min": 0, "max": 1, "step": 0.02}),
-    "face_mask_types": (face_mask_types, {"default": face_mask_types[0]}),
     # Face detector score
     "mask_blur": ("FLOAT", {"default": 0.7, "min": 0, "max": 1, "step": 0.05}),  # Face mask blur
     "landmarker_score": ("FLOAT", {"default": 0.5, "min": 0, "max": 1, "step": 0.05}),
@@ -73,8 +72,13 @@ common_input_dict={
     "face_selector_mode": (face_selector_modes, {"default": face_selector_modes[0]}),
     "reference_face_position": ("INT", {"default": 0}),
     "reference_face_distance": ("FLOAT", {"max": 2.0, "min": 0.0, "default": 0.6}),
-    "faceswap_poisson_blend":("FLOAT", {"default": 1., "min": 0, "max": 1., "step": 0.05})
 }
+common_input_dict2 = {
+    "reference_face_image": ("IMAGE", ),
+    "face_mask_types": (face_mask_types, {"default": face_mask_types[0]}),
+    "faceswap_poisson_blend": ("FLOAT", {"default": 1., "min": 0, "max": 1., "step": 0.05}),
+}
+
 
 
 
@@ -170,7 +174,9 @@ class WD_FaceFusion:
                 "image": ("IMAGE",),
                 **common_input_dict
             },
-            "optional": {"reference_face_image": ("IMAGE", )}
+            "optional": {
+                **common_input_dict2
+            }
         }
 
     RETURN_TYPES = ("IMAGE",)
@@ -179,7 +185,7 @@ class WD_FaceFusion:
 
     def execute(self, image, single_source_image, device, face_detector_score, mask_blur, landmarker_score,faceswap_poisson_blend,
                 face_enhance_blend,face_selector_order,face_selector_mode,reference_face_position,reference_face_distance,
-                face_mask_types,reference_face_image=None,thread_count=1):
+                face_mask_types='box',reference_face_image=None,thread_count=1):
         source_path = tempfile.NamedTemporaryFile(delete=False, suffix=".png").name
         tensor_to_pil(single_source_image).save(source_path)
         source_paths = [source_path]
@@ -229,7 +235,7 @@ class WD_FaceFusion_Video:
                     "default": "https://exsample.mp4",
                     "defaultBehavior": "input"
                 }),
-                "reference_face_image": ("IMAGE",)
+                **common_input_dict2
             }
         }
 
@@ -240,7 +246,7 @@ class WD_FaceFusion_Video:
 
     def execute(self, video_url, single_source_image, device, face_detector_score, mask_blur, landmarker_score,faceswap_poisson_blend,
                 face_enhance_blend, thread_count, face_selector_order, face_selector_mode, reference_face_position,
-                face_mask_types,reference_face_distance, video=None,reference_face_image=None):
+                face_mask_types='box',reference_face_distance=0.6, video=None,reference_face_image=None):
         # Download the video to a temporary file
         if video is None and (video_url is None or video_url.strip() == ""):
             raise ValueError("Either video_url or video path must be provided")
@@ -300,7 +306,7 @@ class WD_FaceFusion_Video2:
                     "default": "https://exsample.mp4",
                     "defaultBehavior": "input"
                 }),
-                "reference_face_image": ("IMAGE",)
+                **common_input_dict2
             }
         }
 
@@ -311,7 +317,7 @@ class WD_FaceFusion_Video2:
 
     def execute(self, video_url, single_source_image, device, face_detector_score, mask_blur, landmarker_score,faceswap_poisson_blend,
                 face_enhance_blend, thread_count, face_selector_order, face_selector_mode, reference_face_position,
-                face_mask_types,reference_face_distance, video=None,reference_face_image=None):
+                face_mask_types='box',reference_face_distance=0.6, video=None,reference_face_image=None):
         # Download the video to a temporary file
         if video is None and (video_url is None or video_url.strip() == ""):
             raise ValueError("Either video_url or video path must be provided")
