@@ -241,6 +241,7 @@ StateKey = Literal\
 	'log_level',
 	'job_id',
 	'job_status',
+	'faceswap_poisson_blend',
 	'step_index'
 ]
 State = TypedDict('State',

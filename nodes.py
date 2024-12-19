@@ -69,17 +69,17 @@ common_input_dict={
     "landmarker_score": ("FLOAT", {"default": 0.5, "min": 0, "max": 1, "step": 0.05}),
     # Face landmarker score
     "face_enhance_blend": ("FLOAT", {"default": 30, "min": 0, "max": 100, "step": 1}),
-    "thread_count": ("INT", {"default": 4, "min": 1, "max": 20, "step": 1}),
     "face_selector_order": (face_selector_orders,{"default": face_selector_orders[0]}),
     "face_selector_mode": (face_selector_modes, {"default": face_selector_modes[0]}),
     "reference_face_position": ("INT", {"default": 0}),
     "reference_face_distance": ("FLOAT", {"max": 2.0, "min": 0.0, "default": 0.6}),
+    "faceswap_poisson_blend":("FLOAT", {"default": 1., "min": 0, "max": 1., "step": 0.05})
 }
 
 
 
 def facefusion_run(source_path, target_path: str, output_path, provider, face_selector_mode, reference_face_position,
-                   reference_face_distance, working=conditional_process,detector_score=0.6, mask_blur=0.3,
+                   reference_face_distance, working=conditional_process,detector_score=0.6, mask_blur=0.3,faceswap_poisson_blend=1.,
                    face_enhance_blend=0., landmarker_score=0.5, thread_count=1, face_selector_order=None,
                    reference_face_image=None,face_mask_types='box'):
     from facefusion.vision import detect_image_resolution, pack_resolution, detect_video_resolution, detect_video_fps
@@ -95,6 +95,7 @@ def facefusion_run(source_path, target_path: str, output_path, provider, face_se
     #apply_state_item('command', 'headless-run')
 
     # ===
+    apply_state_item('faceswap_poisson_blend', faceswap_poisson_blend)
     apply_state_item('face_selector_mode', face_selector_mode, )
     apply_state_item('reference_face_position', reference_face_position, )
     apply_state_item('reference_face_distance', reference_face_distance, )
@@ -176,9 +177,9 @@ class WD_FaceFusion:
     FUNCTION = "execute"
     CATEGORY = "WDTRIP"
 
-    def execute(self, image, single_source_image, device, face_detector_score, mask_blur, landmarker_score,
+    def execute(self, image, single_source_image, device, face_detector_score, mask_blur, landmarker_score,faceswap_poisson_blend,
                 face_enhance_blend,face_selector_order,face_selector_mode,reference_face_position,reference_face_distance,
-                face_mask_types,reference_face_image=None):
+                face_mask_types,reference_face_image=None,thread_count=1):
         source_path = tempfile.NamedTemporaryFile(delete=False, suffix=".png").name
         tensor_to_pil(single_source_image).save(source_path)
         source_paths = [source_path]
@@ -205,6 +206,7 @@ class WD_FaceFusion:
             reference_face_position=reference_face_position,
             reference_face_distance=reference_face_distance,
             face_mask_types=face_mask_types,
+            faceswap_poisson_blend=faceswap_poisson_blend,
             reference_face_image=reference_face_image
             )
         result = batched_pil_to_tensor([Image.open(output_path)])
@@ -218,6 +220,7 @@ class WD_FaceFusion_Video:
     def INPUT_TYPES(s):
         return {
             "required": {
+                "thread_count": ("INT", {"default": 4, "min": 1, "max": 20, "step": 1}),
                 **common_input_dict
             },
             "optional": {
@@ -235,7 +238,7 @@ class WD_FaceFusion_Video:
     FUNCTION = "execute"
     CATEGORY = "WDTRIP"
 
-    def execute(self, video_url, single_source_image, device, face_detector_score, mask_blur, landmarker_score,
+    def execute(self, video_url, single_source_image, device, face_detector_score, mask_blur, landmarker_score,faceswap_poisson_blend,
                 face_enhance_blend, thread_count, face_selector_order, face_selector_mode, reference_face_position,
                 face_mask_types,reference_face_distance, video=None,reference_face_image=None):
         # Download the video to a temporary file
@@ -275,6 +278,7 @@ class WD_FaceFusion_Video:
             reference_face_position=reference_face_position,
             reference_face_distance=reference_face_distance,
             face_mask_types=face_mask_types,
+            faceswap_poisson_blend=faceswap_poisson_blend,
             reference_face_image=reference_face_image
                        )
         return {"ui":{"video":[file,output_path]}, "result": (output_path,debug(time_sec))}
@@ -287,6 +291,7 @@ class WD_FaceFusion_Video2:
     def INPUT_TYPES(s):
         return {
             "required": {
+                "thread_count": ("INT", {"default": 4, "min": 1, "max": 20, "step": 1}),
                 **common_input_dict
             },
             "optional": {
@@ -304,7 +309,7 @@ class WD_FaceFusion_Video2:
     FUNCTION = "execute"
     CATEGORY = "WDTRIP"
 
-    def execute(self, video_url, single_source_image, device, face_detector_score, mask_blur, landmarker_score,
+    def execute(self, video_url, single_source_image, device, face_detector_score, mask_blur, landmarker_score,faceswap_poisson_blend,
                 face_enhance_blend, thread_count, face_selector_order, face_selector_mode, reference_face_position,
                 face_mask_types,reference_face_distance, video=None,reference_face_image=None):
         # Download the video to a temporary file
@@ -347,6 +352,7 @@ class WD_FaceFusion_Video2:
             reference_face_position=reference_face_position,
             reference_face_distance=reference_face_distance,
             face_mask_types=face_mask_types,
+            faceswap_poisson_blend=faceswap_poisson_blend,
             reference_face_image=reference_face_image
                        )
         return (images,fps,debug(time_sec))

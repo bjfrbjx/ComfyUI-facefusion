@@ -389,11 +389,19 @@ def swap_face(source_face : Face, target_face : Face, temp_vision_frame : Vision
 		crop_masks.append(occlusion_mask)
 
 	pixel_boost_vision_frames = implode_pixel_boost(crop_vision_frame, pixel_boost_total, model_size)
-	for pixel_boost_vision_frame in pixel_boost_vision_frames:
-		pixel_boost_vision_frame = prepare_crop_frame(pixel_boost_vision_frame)
-		pixel_boost_vision_frame = forward_swap_face(source_face, pixel_boost_vision_frame)
-		pixel_boost_vision_frame = normalize_crop_frame(pixel_boost_vision_frame)
-		temp_vision_frames.append(pixel_boost_vision_frame)
+	# focus 泊松融合
+	faceswap_poisson_blend=state_manager.get_item("faceswap_poisson_blend")
+	center = (int(pixel_boost_vision_frames[0].shape[1] / 2), int(pixel_boost_vision_frames[0].shape[0] / 2))
+	for ori_pixel_boost_vision_frame in pixel_boost_vision_frames:
+		pixel_boost_vision_frame = prepare_crop_frame(ori_pixel_boost_vision_frame)
+		swapped_vision_frame = forward_swap_face(source_face, pixel_boost_vision_frame)
+		swapped_vision_frame = normalize_crop_frame(swapped_vision_frame)
+		if faceswap_poisson_blend and faceswap_poisson_blend<1:
+			import cv2
+			from numpy import full_like,uint8
+			mask = full_like(swapped_vision_frame[...,0],fill_value=int(faceswap_poisson_blend*255),dtype=uint8)
+			swapped_vision_frame=cv2.seamlessClone(uint8(swapped_vision_frame), uint8(ori_pixel_boost_vision_frame), mask, center, cv2.NORMAL_CLONE)
+		temp_vision_frames.append(swapped_vision_frame)
 	crop_vision_frame = explode_pixel_boost(temp_vision_frames, pixel_boost_total, model_size, pixel_boost_size)
 
 	if 'region' in state_manager.get_item('face_mask_types'):
