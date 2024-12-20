@@ -23,7 +23,7 @@ try:
 except:
     folder_paths = None
 
-from facefusion.choices import face_mask_types,face_selector_orders,face_selector_modes,face_mask_regions
+from facefusion.choices import face_mask_types,face_selector_orders,face_selector_modes,face_mask_regions as total_face_mask_regions
 # =================================
 def get_mime_type(file_path):
     # 获取文件的 MIME 类型
@@ -77,7 +77,7 @@ common_input_dict2 = {
     "reference_face_image": ("IMAGE", ),
     "face_mask_types": (face_mask_types, {"default": face_mask_types[0]}),
     "faceswap_poisson_blend": ("FLOAT", {"default": 1., "min": 0, "max": 1., "step": 0.05}),
-    **{i:("BOOLEAN", {"default": True}) for i in face_mask_regions},
+    **{i:("BOOLEAN", {"default": True}) for i in total_face_mask_regions},
 }
 
 
@@ -86,7 +86,7 @@ common_input_dict2 = {
 def facefusion_run(source_path, target_path: str, output_path, provider, face_selector_mode, reference_face_position,
                    reference_face_distance, working=conditional_process,detector_score=0.6, mask_blur=0.3,faceswap_poisson_blend=1.,
                    face_enhance_blend=0., landmarker_score=0.5, thread_count=1, face_selector_order=None,
-                   reference_face_image=None,face_mask_types='box',face_mask_regions=tuple(face_mask_regions)):
+                   reference_face_image=None,face_mask_types='box',face_mask_regions=tuple(total_face_mask_regions)):
     from facefusion.vision import detect_image_resolution, pack_resolution, detect_video_resolution, detect_video_fps
     from facefusion.filesystem import is_video, is_image
     from facefusion import state_manager
@@ -139,7 +139,7 @@ def facefusion_run(source_path, target_path: str, output_path, provider, face_se
     apply_state_item('open_browser', False, )
     apply_state_item('execution_queue_count', 1, )
     apply_state_item('video_memory_strategy', None, )
-    apply_state_item('face_mask_regions',face_mask_regions)
+    apply_state_item('face_mask_regions',face_mask_regions if face_mask_regions else total_face_mask_regions)
     # apply_state_item('execution_device_id', '0')
     if is_image(image_path=target_path):
         image_resolution = detect_image_resolution(target_path)
@@ -213,7 +213,7 @@ class WD_FaceFusion:
             reference_face_distance=reference_face_distance,
             face_mask_types=face_mask_types,
             faceswap_poisson_blend=faceswap_poisson_blend,
-            face_mask_regions=[k for k in face_mask_regions if kwargs.get(k)],
+            face_mask_regions=[k for k in total_face_mask_regions if kwargs.get(k)],
             reference_face_image=reference_face_image
             )
         result = batched_pil_to_tensor([Image.open(output_path)])
@@ -286,7 +286,7 @@ class WD_FaceFusion_Video:
             reference_face_distance=reference_face_distance,
             face_mask_types=face_mask_types,
             faceswap_poisson_blend=faceswap_poisson_blend,
-            face_mask_regions=[k for k in face_mask_regions if kwargs.get(k)],
+            face_mask_regions=[k for k in total_face_mask_regions if kwargs.get(k)],
             reference_face_image=reference_face_image
                        )
         return {"ui":{"video":[file,output_path]}, "result": (output_path,debug(time_sec))}
@@ -361,7 +361,7 @@ class WD_FaceFusion_Video2:
             reference_face_distance=reference_face_distance,
             face_mask_types=face_mask_types,
             faceswap_poisson_blend=faceswap_poisson_blend,
-            face_mask_regions=[k for k in face_mask_regions if kwargs.get(k)],
+            face_mask_regions=[k for k in total_face_mask_regions if kwargs.get(k)],
             reference_face_image=reference_face_image
                        )
         return (images,fps,debug(time_sec))
