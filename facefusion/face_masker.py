@@ -39,7 +39,7 @@ MODEL_SET : ModelSet =\
 		{
 			'face_parser':
 			{
-				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/resnet_34.hash',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/bisenet_resnet_34.hash',
 				'path': resolve_relative_path('../.assets/models/resnet_34.hash')
 			}
 		},
@@ -47,7 +47,7 @@ MODEL_SET : ModelSet =\
 		{
 			'face_parser':
 			{
-				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/resnet_34.onnx',
+				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/bisenet_resnet_34.onnx',
 				'path': resolve_relative_path('../.assets/models/resnet_34.onnx')
 			}
 		},

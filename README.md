@@ -17,7 +17,7 @@ https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/g
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/inswapper_128_fp16.onnx
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/kim_vocal_2.onnx
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/open_nsfw.onnx
-https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/resnet_34.onnx
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/bisenet_resnet_34.onnx
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/yoloface_8n.onnx
 
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/2dfan4.hash
@@ -29,7 +29,7 @@ https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/g
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/inswapper_128_fp16.hash
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/kim_vocal_2.hash
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/open_nsfw.hash
-https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/resnet_34.hash
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/bisenet_resnet_34.hash
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/yoloface_8n.hash
 ```
 ![models.png](.github/models.png)
