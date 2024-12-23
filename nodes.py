@@ -408,18 +408,18 @@ class WD_FaceFusion_Video2:
                 processor_module.process_video(state_manager.get_item('source_paths'), temp_frame_paths)
                 processor_module.post_process()
         process_manager.end()
-        import numpy as np
+
         from concurrent.futures import ThreadPoolExecutor 
         from facefusion.vision import cv2imread
         frame_temp=[None]*len(temp_frame_paths)
         def func(idx,fname):
-            frame_temp[idx] = cv2imread(fname)
+            frame_temp[idx] = torch.from_numpy(cv2imread(fname)[..., ::-1].copy())
         with ThreadPoolExecutor(max_workers=int(state_manager.get_item('execution_thread_count'))) as pool:
             for idx,fname in enumerate(temp_frame_paths):
                 pool.submit(func,idx,fname)
-        imgs = np.stack(frame_temp) / 255.
+        imgs = torch.stack(frame_temp) / 255.
         clear_temp_directory(state_manager.get_item('target_path'))
-        return torch.from_numpy(imgs[..., ::-1].copy())
+        return imgs
 
 class WD_VIDEO2PATH:
     RETURN_TYPES = ("PATH",)
