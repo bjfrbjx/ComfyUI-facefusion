@@ -19,6 +19,8 @@ https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/k
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/open_nsfw.onnx
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/bisenet_resnet_34.onnx
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/yoloface_8n.onnx
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/retinaface_10g.onnx
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/scrfd_2.5g.onnx
 
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/2dfan4.hash
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/arcface_w600k_r50.hash
@@ -31,6 +33,8 @@ https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/k
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/open_nsfw.hash
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/bisenet_resnet_34.hash
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/yoloface_8n.hash
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/retinaface_10g.hash
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/scrfd_2.5g.hash
 ```
 ![models.png](.github/models.png)
 # play
@@ -46,3 +50,7 @@ single_source_image: 换脸来源
 image：换脸目标   
 reference_face_image：脸部追踪，当启用face_selector_mode=reference时，在多人图片中跟踪相似的脸进行替换   
 face_enhance_blend:gfpgan1.4修正脸部的强度，0~100 ，0就是不启用修正  
+
+## fix
+1 yoloface 有时识别不出来人脸，导致闪帧，改用retinaface或者scrfd
+![error_yoloface.png](.github/error_yoloface.png)

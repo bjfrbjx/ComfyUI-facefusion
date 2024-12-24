@@ -6,6 +6,7 @@ from PIL import Image
 from facefusion.core import common_pre_check, conditional_append_reference_faces
 from facefusion.face_analyser import get_many_faces, get_one_face
 from facefusion.face_store import append_reference_face, clear_reference_faces
+from facefusion.typing import FaceDetectorModel
 
 opener = urllib.request.build_opener()
 opener.addheaders = [('User-Agent',
@@ -77,6 +78,7 @@ common_input_dict2 = {
     "reference_face_image": ("IMAGE", ),
     "face_mask_types": (face_mask_types, {"default": face_mask_types[0]}),
     "faceswap_poisson_blend": ("FLOAT", {"default": 1., "min": 0, "max": 1., "step": 0.05}),
+    "face_detector_model": (FaceDetectorModel, {"default": FaceDetectorModel[-1]}),
     **{i:("BOOLEAN", {"default": True}) for i in total_face_mask_regions},
 }
 
@@ -85,7 +87,7 @@ common_input_dict2 = {
 
 def facefusion_run(source_path, target_path: str, output_path, provider, face_selector_mode, reference_face_position,
                    reference_face_distance, working=conditional_process,detector_score=0.6, mask_blur=0.3,faceswap_poisson_blend=1.,
-                   face_enhance_blend=0., landmarker_score=0.5, thread_count=1, face_selector_order=None,
+                   face_enhance_blend=0., landmarker_score=0.5, thread_count=1, face_selector_order=None,face_detector_model='yoloface',
                    reference_face_image=None,face_mask_types='box',face_mask_regions=tuple(total_face_mask_regions)):
     from facefusion.vision import detect_image_resolution, pack_resolution, detect_video_resolution, detect_video_fps
     from facefusion.filesystem import is_video, is_image
@@ -114,7 +116,7 @@ def facefusion_run(source_path, target_path: str, output_path, provider, face_se
     apply_state_item('face_detector_score', detector_score)
     apply_state_item('face_mask_blur', mask_blur)
     apply_state_item('face_landmarker_score', landmarker_score)
-    apply_state_item('face_detector_model', 'yoloface', )
+    apply_state_item('face_detector_model', face_detector_model, )
     apply_state_item('face_detector_size', '640x640', )
     apply_state_item('face_landmarker_model', '2dfan4', )
     apply_state_item('reference_frame_number', 0, )
@@ -214,6 +216,7 @@ class WD_FaceFusion:
             face_mask_types=face_mask_types,
             faceswap_poisson_blend=faceswap_poisson_blend,
             face_mask_regions=[k for k in total_face_mask_regions if kwargs.get(k)],
+            face_detector_model=kwargs.get('face_detector_model','yoloface'),
             reference_face_image=reference_face_image
             )
         result = batched_pil_to_tensor([Image.open(output_path)])
@@ -287,6 +290,7 @@ class WD_FaceFusion_Video:
             face_mask_types=face_mask_types,
             faceswap_poisson_blend=faceswap_poisson_blend,
             face_mask_regions=[k for k in total_face_mask_regions if kwargs.get(k)],
+            face_detector_model=kwargs.get('face_detector_model', 'yoloface'),
             reference_face_image=reference_face_image
                        )
         return {"ui":{"video":[file,output_path]}, "result": (output_path,debug(time_sec))}
@@ -362,6 +366,7 @@ class WD_FaceFusion_Video2:
             face_mask_types=face_mask_types,
             faceswap_poisson_blend=faceswap_poisson_blend,
             face_mask_regions=[k for k in total_face_mask_regions if kwargs.get(k)],
+            face_detector_model=kwargs.get('face_detector_model', 'yoloface'),
             reference_face_image=reference_face_image
                        )
         return (images,fps,debug(time_sec))
