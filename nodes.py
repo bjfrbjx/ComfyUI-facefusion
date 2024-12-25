@@ -310,7 +310,6 @@ class WD_FaceFusion_Video:
 
 
 class WD_FaceFusion_Video2:
-    OUTPUT_NODE = True
 
     @classmethod
     def INPUT_TYPES(s):
