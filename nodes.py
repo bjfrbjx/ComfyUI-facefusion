@@ -6,7 +6,6 @@ from PIL import Image
 from facefusion.core import common_pre_check, conditional_append_reference_faces
 from facefusion.face_analyser import get_many_faces, get_one_face
 from facefusion.face_store import append_reference_face, clear_reference_faces
-from facefusion.typing import FaceDetectorModel
 
 opener = urllib.request.build_opener()
 opener.addheaders = [('User-Agent',
@@ -24,7 +23,9 @@ try:
 except:
     folder_paths = None
 
-from facefusion.choices import face_mask_types,face_selector_orders,face_selector_modes,face_mask_regions as total_face_mask_regions
+from facefusion.choices import face_mask_types,face_selector_orders,face_selector_modes,\
+    face_mask_regions as total_face_mask_regions,face_detector_set
+
 # =================================
 def get_mime_type(file_path):
     # 获取文件的 MIME 类型
@@ -76,9 +77,9 @@ common_input_dict={
 }
 common_input_dict2 = {
     "reference_face_image": ("IMAGE", ),
+    "face_detector_model": (list(face_detector_set.keys()), {"default": list(face_detector_set.keys())[-1]}),
     "face_mask_types": (face_mask_types, {"default": face_mask_types[0]}),
     "faceswap_poisson_blend": ("FLOAT", {"default": 1., "min": 0, "max": 1., "step": 0.05}),
-    "face_detector_model": (FaceDetectorModel, {"default": FaceDetectorModel[-1]}),
     **{i:("BOOLEAN", {"default": True}) for i in total_face_mask_regions},
 }
 
