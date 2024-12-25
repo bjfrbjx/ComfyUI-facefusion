@@ -12,6 +12,8 @@ const VALID_TYPES = [
   'string'
 ]
 const REGIONS = [ 'skin', 'left-eyebrow', 'right-eyebrow', 'left-eye', 'right-eye', 'glasses', 'nose', 'mouth', 'upper-lip', 'lower-lip' ]
+const DEBUGITEMS = [ 'bounding-box', 'face-landmark-5', 'face-landmark-5/68', 'face-landmark-68', 'face-landmark-68/5', 'face-mask', 'face-detector-score', 'face-landmarker-score', 'age', 'gender', 'race' ]
+
 
 function hideWidget(node, widget, suffix = '') {
   if (widget.type?.startsWith(CONVERTED_TYPE)) return
@@ -76,6 +78,7 @@ app.registerExtension({
         }
         nodeType.prototype.onNodeCreated = function () {
             this.inputs_offset = 0;
+            // face_mask_types
             const key_w=this.widgets.find((w) => w.name === "face_mask_types");
             if(key_w["value"]!=="region"){
                 for(let i in REGIONS){
@@ -98,6 +101,31 @@ app.registerExtension({
                 }
             };
           });
+
+          // face_debug
+          const key_w2=this.widgets.find((w) => w.name === "face_debug");
+            if(!key_w2["value"]){
+                for(let i in DEBUGITEMS){
+                    const target_w=this.widgets.find((w) => w.name === DEBUGITEMS[i]);
+                    hideWidget(this,target_w);
+                }
+
+            };
+            chainCallback(key_w2, "callback", (value) => {
+            if(key_w2["value"]){
+                for(let i in DEBUGITEMS){
+                    const target_w=this.widgets.find((w) => w.name === DEBUGITEMS[i]);
+                    showWidget(this,target_w);
+                }
+            }
+            else{
+                for(let i in DEBUGITEMS){
+                    const target_w=this.widgets.find((w) => w.name === DEBUGITEMS[i]);
+                    hideWidget(this,target_w);
+                }
+            };
+          });
+
         };
 //        switch (nodeData.name) {
 //            case "hxy":

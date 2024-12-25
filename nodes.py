@@ -6,6 +6,7 @@ from PIL import Image
 from facefusion.core import common_pre_check, conditional_append_reference_faces
 from facefusion.face_analyser import get_many_faces, get_one_face
 from facefusion.face_store import append_reference_face, clear_reference_faces
+from facefusion.processors.choices import face_debugger_items
 
 opener = urllib.request.build_opener()
 opener.addheaders = [('User-Agent',
@@ -78,9 +79,12 @@ common_input_dict={
 common_input_dict2 = {
     "reference_face_image": ("IMAGE", ),
     "face_detector_model": (list(face_detector_set.keys()), {"default": list(face_detector_set.keys())[-1]}),
-    "face_mask_types": (face_mask_types, {"default": face_mask_types[0]}),
     "faceswap_poisson_blend": ("FLOAT", {"default": 1., "min": 0, "max": 1., "step": 0.05}),
+    "face_mask_types": (face_mask_types, {"default": face_mask_types[0]}),
     **{i:("BOOLEAN", {"default": True}) for i in total_face_mask_regions},
+    "face_debug": ("BOOLEAN", {"default": False}),
+    **{i:("BOOLEAN", {"default": i in ['face-landmark-5/68', 'face-mask']}) for i in face_debugger_items},
+
 }
 
 
@@ -89,18 +93,22 @@ common_input_dict2 = {
 def facefusion_run(source_path, target_path: str, output_path, provider, face_selector_mode, reference_face_position,
                    reference_face_distance, working=conditional_process,detector_score=0.6, mask_blur=0.3,faceswap_poisson_blend=1.,
                    face_enhance_blend=0., landmarker_score=0.5, thread_count=1, face_selector_order=None,face_detector_model='yoloface',
-                   reference_face_image=None,face_mask_types='box',face_mask_regions=tuple(total_face_mask_regions)):
+                   reference_face_image=None,face_mask_types='box',face_mask_regions=tuple(total_face_mask_regions),
+                   debug=False,debug_items=('face-landmark-5/68', 'face-mask')):
     from facefusion.vision import detect_image_resolution, pack_resolution, detect_video_resolution, detect_video_fps
     from facefusion.filesystem import is_video, is_image
     from facefusion import state_manager
     the_processors = ['face_swapper', ]
     if face_enhance_blend > 0.:
         the_processors.append('face_enhancer')
+    if debug > 0.:
+        the_processors.append('face_debugger')
     apply_state_item = state_manager.set_item
     apply_state_item('processors', the_processors)
     apply_state_item('face_detector_angles', [0])
     apply_state_item('face_selector_order', face_selector_order, )
-    #apply_state_item('command', 'headless-run')
+    apply_state_item('face_debugger_items', debug_items, )
+
 
     # ===
     apply_state_item('faceswap_poisson_blend', faceswap_poisson_blend)
@@ -218,6 +226,8 @@ class WD_FaceFusion:
             faceswap_poisson_blend=faceswap_poisson_blend,
             face_mask_regions=[k for k in total_face_mask_regions if kwargs.get(k)],
             face_detector_model=kwargs.get('face_detector_model','yoloface'),
+            debug=kwargs.get("face_debug",False),
+            debug_items=[k for k in face_debugger_items if kwargs.get(k)],
             reference_face_image=reference_face_image
             )
         result = batched_pil_to_tensor([Image.open(output_path)])
@@ -292,6 +302,8 @@ class WD_FaceFusion_Video:
             faceswap_poisson_blend=faceswap_poisson_blend,
             face_mask_regions=[k for k in total_face_mask_regions if kwargs.get(k)],
             face_detector_model=kwargs.get('face_detector_model', 'yoloface'),
+            debug=kwargs.get("face_debug", False),
+            debug_items=[k for k in face_debugger_items if kwargs.get(k)],
             reference_face_image=reference_face_image
                        )
         return {"ui":{"video":[file,output_path]}, "result": (output_path,debug(time_sec))}
@@ -368,6 +380,8 @@ class WD_FaceFusion_Video2:
             faceswap_poisson_blend=faceswap_poisson_blend,
             face_mask_regions=[k for k in total_face_mask_regions if kwargs.get(k)],
             face_detector_model=kwargs.get('face_detector_model', 'yoloface'),
+            debug=kwargs.get("face_debug", False),
+            debug_items=[k for k in face_debugger_items if kwargs.get(k)],
             reference_face_image=reference_face_image
                        )
         return (images,fps,debug(time_sec))

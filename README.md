@@ -52,5 +52,7 @@ reference_face_image：脸部追踪，当启用face_selector_mode=reference时�
 face_enhance_blend:gfpgan1.4修正脸部的强度，0~100 ，0就是不启用修正  
 
 ## fix
-1 yoloface 有时识别不出来人脸，导致闪帧，改用retinaface或者scrfd
+1: yoloface 有时识别不出来明显的人脸，导致闪帧，放出选项用retinaface或者scrfd，需要补充下载两个模型
 ![error_yoloface.png](.github/error_yoloface.png)
+2: 添加debug选项方便排查
+![face_debug.png](.github/face_debug.png)
