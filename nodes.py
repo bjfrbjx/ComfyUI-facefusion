@@ -394,11 +394,11 @@ class WD_FaceFusion_Video2:
         from facefusion.ffmpeg import extract_frames
         for processor_module in get_processors_modules(state_manager.get_item('processors')):
             if not processor_module.pre_process('output'):
-                return None
+                raise Exception("未识别到人脸，请调整`face_detector_model`和`face_detector_score`重试")
         conditional_append_reference_faces()
         if analyse_video(state_manager.get_item('target_path'), state_manager.get_item('trim_frame_start'),
                          state_manager.get_item('trim_frame_end')):
-            return None
+            raise Exception("视频解帧失败")
         # clear temp
         logger.debug(wording.get('clearing_temp'), __name__)
         clear_temp_directory(state_manager.get_item('target_path'))
