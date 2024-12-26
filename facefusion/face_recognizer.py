@@ -74,7 +74,7 @@ def calc_embedding(temp_vision_frame : VisionFrame, face_landmark_5 : FaceLandma
 
 def forward(crop_vision_frame : VisionFrame) -> Embedding:
 	face_recognizer = get_inference_pool().get('face_recognizer')
-	# fixme
+	# fixme 兼容
 	with conditional_thread_semaphore():
 		try:
 			embedding = face_recognizer.run(None, {'input': crop_vision_frame})[0]
