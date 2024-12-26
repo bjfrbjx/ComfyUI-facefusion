@@ -1,3 +1,4 @@
+import inspect
 import mimetypes
 import urllib.request
 
@@ -59,6 +60,8 @@ def debug(time):
 
     return f"info:[onnx:{onnxruntime_provide}]\n[download_time:{time}]"
 
+from facefusion import state_manager
+state_manager.set_item('download_providers', ['github', 'huggingface'] )
 common_pre_check()
 
 
@@ -97,7 +100,6 @@ def facefusion_run(source_path, target_path: str, output_path, provider, face_se
                    debug=False,debug_items=('face-landmark-5/68', 'face-mask')):
     from facefusion.vision import detect_image_resolution, pack_resolution, detect_video_resolution, detect_video_fps
     from facefusion.filesystem import is_video, is_image
-    from facefusion import state_manager
     the_processors = ['face_swapper', ]
     if face_enhance_blend > 0.:
         the_processors.append('face_enhancer')
@@ -108,7 +110,9 @@ def facefusion_run(source_path, target_path: str, output_path, provider, face_se
     apply_state_item('face_detector_angles', [0])
     apply_state_item('face_selector_order', face_selector_order, )
     apply_state_item('face_debugger_items', debug_items, )
-
+    apply_state_item('temp_path', tempfile.gettempdir(), )
+    apply_state_item('face_parser_model','bisenet_resnet_34')
+    apply_state_item('face_occluder_model', 'xseg_1')
 
     # ===
     apply_state_item('faceswap_poisson_blend', faceswap_poisson_blend)
@@ -396,8 +400,8 @@ class WD_FaceFusion_Video2:
             if not processor_module.pre_process('output'):
                 raise Exception("未识别到人脸，请调整`face_detector_model`和`face_detector_score`重试")
         conditional_append_reference_faces()
-        if analyse_video(state_manager.get_item('target_path'), state_manager.get_item('trim_frame_start'),
-                         state_manager.get_item('trim_frame_end')):
+        if analyse_video(state_manager.get_item('target_path'), state_manager.get_item('trim_frame_start') or 0,
+                         state_manager.get_item('trim_frame_end') or 0):
             raise Exception("视频解帧失败")
         # clear temp
         logger.debug(wording.get('clearing_temp'), __name__)
@@ -414,7 +418,11 @@ class WD_FaceFusion_Video2:
                                             state_manager.get_item('output_video_fps'))
         logger.info(wording.get('extracting_frames').format(resolution=temp_video_resolution, fps=temp_video_fps),
                     __name__)
-        if extract_frames(state_manager.get_item('target_path'), temp_video_resolution, temp_video_fps):
+        sig = inspect.signature(extract_frames)
+        args=[state_manager.get_item('target_path'), temp_video_resolution, temp_video_fps]
+        if len(sig.parameters)>3:
+            args+=[state_manager.get_item('trim_frame_start'),state_manager.get_item('trim_frame_end')]
+        if extract_frames(*args):
             logger.debug(wording.get('extracting_frames_succeed'), __name__)
         else:
             process_manager.end()

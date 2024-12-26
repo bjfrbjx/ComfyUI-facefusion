@@ -3,6 +3,7 @@
 import os
 
 os.environ['OMP_NUM_THREADS'] = '1'
+os.environ["GRADIO_SHARE"] = "true"
 os.environ['GRADIO_SERVER_PORT'] = '7860'
 os.environ['GRADIO_SERVER_NAME'] = '0.0.0.0'
 import urllib.request

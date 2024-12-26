@@ -1,4 +1,5 @@
 from argparse import ArgumentParser
+from functools import lru_cache
 from typing import List
 
 import cv2
@@ -9,142 +10,143 @@ import facefusion.jobs.job_store
 import facefusion.processors.core as processors
 from facefusion import config, content_analyser, inference_manager, logger, process_manager, state_manager, wording
 from facefusion.common_helper import create_int_metavar
-from facefusion.download import conditional_download_hashes, conditional_download_sources
+from facefusion.download import conditional_download_hashes, conditional_download_sources, resolve_download_url
 from facefusion.filesystem import in_directory, is_image, is_video, resolve_relative_path, same_file_extension
 from facefusion.processors import choices as processors_choices
 from facefusion.processors.typing import FrameColorizerInputs
 from facefusion.program_helper import find_argument_group
 from facefusion.thread_helper import thread_semaphore
-from facefusion.typing import ApplyStateItem, Args, Face, InferencePool, ModelOptions, ModelSet, ProcessMode, QueuePayload, UpdateProgress, VisionFrame
+from facefusion.typing import ApplyStateItem, Args, DownloadScope, Face, InferencePool, ModelOptions, ModelSet, ProcessMode, QueuePayload, UpdateProgress, VisionFrame
 from facefusion.vision import read_image, read_static_image, unpack_resolution, write_image
 
-MODEL_SET : ModelSet =\
-{
-	'ddcolor':
+
+@lru_cache(maxsize = None)
+def create_static_model_set(download_scope : DownloadScope) -> ModelSet:
+	return\
 	{
-		'hashes':
+		'ddcolor':
 		{
-			'frame_colorizer':
+			'hashes':
 			{
-				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ddcolor.hash',
-				'path': resolve_relative_path('../.assets/models/ddcolor.hash')
-			}
+				'frame_colorizer':
+				{
+					'url': resolve_download_url('models-3.0.0', 'ddcolor.hash'),
+					'path': resolve_relative_path('../.assets/models/ddcolor.hash')
+				}
+			},
+			'sources':
+			{
+				'frame_colorizer':
+				{
+					'url': resolve_download_url('models-3.0.0', 'ddcolor.onnx'),
+					'path': resolve_relative_path('../.assets/models/ddcolor.onnx')
+				}
+			},
+			'type': 'ddcolor'
 		},
-		'sources':
+		'ddcolor_artistic':
 		{
-			'frame_colorizer':
+			'hashes':
 			{
-				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ddcolor.onnx',
-				'path': resolve_relative_path('../.assets/models/ddcolor.onnx')
-			}
+				'frame_colorizer':
+				{
+					'url': resolve_download_url('models-3.0.0', 'ddcolor_artistic.hash'),
+					'path': resolve_relative_path('../.assets/models/ddcolor_artistic.hash')
+				}
+			},
+			'sources':
+			{
+				'frame_colorizer':
+				{
+					'url': resolve_download_url('models-3.0.0', 'ddcolor_artistic.onnx'),
+					'path': resolve_relative_path('../.assets/models/ddcolor_artistic.onnx')
+				}
+			},
+			'type': 'ddcolor'
 		},
-		'type': 'ddcolor'
-	},
-	'ddcolor_artistic':
-	{
-		'hashes':
+		'deoldify':
 		{
-			'frame_colorizer':
+			'hashes':
 			{
-				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ddcolor_artistic.hash',
-				'path': resolve_relative_path('../.assets/models/ddcolor_artistic.hash')
-			}
+				'frame_colorizer':
+				{
+					'url': resolve_download_url('models-3.0.0', 'deoldify.hash'),
+					'path': resolve_relative_path('../.assets/models/deoldify.hash')
+				}
+			},
+			'sources':
+			{
+				'frame_colorizer':
+				{
+					'url': resolve_download_url('models-3.0.0', 'deoldify.onnx'),
+					'path': resolve_relative_path('../.assets/models/deoldify.onnx')
+				}
+			},
+			'type': 'deoldify'
 		},
-		'sources':
+		'deoldify_artistic':
 		{
-			'frame_colorizer':
+			'hashes':
 			{
-				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/ddcolor_artistic.onnx',
-				'path': resolve_relative_path('../.assets/models/ddcolor_artistic.onnx')
-			}
+				'frame_colorizer':
+				{
+					'url': resolve_download_url('models-3.0.0', 'deoldify_artistic.hash'),
+					'path': resolve_relative_path('../.assets/models/deoldify_artistic.hash')
+				}
+			},
+			'sources':
+			{
+				'frame_colorizer':
+				{
+					'url': resolve_download_url('models-3.0.0', 'deoldify_artistic.onnx'),
+					'path': resolve_relative_path('../.assets/models/deoldify_artistic.onnx')
+				}
+			},
+			'type': 'deoldify'
 		},
-		'type': 'ddcolor'
-	},
-	'deoldify':
-	{
-		'hashes':
+		'deoldify_stable':
 		{
-			'frame_colorizer':
+			'hashes':
 			{
-				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/deoldify.hash',
-				'path': resolve_relative_path('../.assets/models/deoldify.hash')
-			}
-		},
-		'sources':
-		{
-			'frame_colorizer':
+				'frame_colorizer':
+				{
+					'url': resolve_download_url('models-3.0.0', 'deoldify_stable.hash'),
+					'path': resolve_relative_path('../.assets/models/deoldify_stable.hash')
+				}
+			},
+			'sources':
 			{
-				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/deoldify.onnx',
-				'path': resolve_relative_path('../.assets/models/deoldify.onnx')
-			}
-		},
-		'type': 'deoldify'
-	},
-	'deoldify_artistic':
-	{
-		'hashes':
-		{
-			'frame_colorizer':
-			{
-				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/deoldify_artistic.hash',
-				'path': resolve_relative_path('../.assets/models/deoldify_artistic.hash')
-			}
-		},
-		'sources':
-		{
-			'frame_colorizer':
-			{
-				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/deoldify_artistic.onnx',
-				'path': resolve_relative_path('../.assets/models/deoldify_artistic.onnx')
-			}
-		},
-		'type': 'deoldify'
-	},
-	'deoldify_stable':
-	{
-		'hashes':
-		{
-			'frame_colorizer':
-			{
-				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/deoldify_stable.hash',
-				'path': resolve_relative_path('../.assets/models/deoldify_stable.hash')
-			}
-		},
-		'sources':
-		{
-			'frame_colorizer':
-			{
-				'url': 'https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/deoldify_stable.onnx',
-				'path': resolve_relative_path('../.assets/models/deoldify_stable.onnx')
-			}
-		},
-		'type': 'deoldify'
+				'frame_colorizer':
+				{
+					'url': resolve_download_url('models-3.0.0', 'deoldify_stable.onnx'),
+					'path': resolve_relative_path('../.assets/models/deoldify_stable.onnx')
+				}
+			},
+			'type': 'deoldify'
+		}
 	}
-}
 
 
 def get_inference_pool() -> InferencePool:
 	model_sources = get_model_options().get('sources')
-	model_context = __name__ + '.' + state_manager.get_item('frame_colorizer_model')
-	return inference_manager.get_inference_pool(model_context, model_sources)
+	return inference_manager.get_inference_pool(__name__, model_sources)
 
 
 def clear_inference_pool() -> None:
-	model_context = __name__ + '.' + state_manager.get_item('frame_colorizer_model')
-	inference_manager.clear_inference_pool(model_context)
+	inference_manager.clear_inference_pool(__name__)
 
 
 def get_model_options() -> ModelOptions:
 	frame_colorizer_model = state_manager.get_item('frame_colorizer_model')
-	return MODEL_SET.get(frame_colorizer_model)
+	return create_static_model_set('full').get(frame_colorizer_model)
 
 
 def register_args(program : ArgumentParser) -> None:
 	group_processors = find_argument_group(program, 'processors')
 	if group_processors:
 		group_processors.add_argument('--frame-colorizer-model', help = wording.get('help.frame_colorizer_model'), default = config.get_str_value('processors.frame_colorizer_model', 'ddcolor'), choices = processors_choices.frame_colorizer_models)
-		group_processors.add_argument('--frame-colorizer-blend', help = wording.get('help.frame_colorizer_blend'), type = int, default = config.get_int_value('processors.frame_colorizer_blend', '100'), choices = processors_choices.frame_colorizer_blend_range, metavar = create_int_metavar(processors_choices.frame_colorizer_blend_range))
 		group_processors.add_argument('--frame-colorizer-size', help = wording.get('help.frame_colorizer_size'), type = str, default = config.get_str_value('processors.frame_colorizer_size', '256x256'), choices = processors_choices.frame_colorizer_sizes)
+		group_processors.add_argument('--frame-colorizer-blend', help = wording.get('help.frame_colorizer_blend'), type = int, default = config.get_int_value('processors.frame_colorizer_blend', '100'), choices = processors_choices.frame_colorizer_blend_range, metavar = create_int_metavar(processors_choices.frame_colorizer_blend_range))
 		facefusion.jobs.job_store.register_step_keys([ 'frame_colorizer_model', 'frame_colorizer_blend', 'frame_colorizer_size' ])
 
 
@@ -155,11 +157,10 @@ def apply_args(args : Args, apply_state_item : ApplyStateItem) -> None:
 
 
 def pre_check() -> bool:
-	download_directory_path = resolve_relative_path('../.assets/models')
 	model_hashes = get_model_options().get('hashes')
 	model_sources = get_model_options().get('sources')
 
-	return conditional_download_hashes(download_directory_path, model_hashes) and conditional_download_sources(download_directory_path, model_sources)
+	return conditional_download_hashes(model_hashes) and conditional_download_sources(model_sources)
 
 
 def pre_process(mode : ProcessMode) -> bool:

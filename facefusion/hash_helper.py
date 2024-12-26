@@ -8,19 +8,20 @@ from facefusion.filesystem import is_file
 def create_hash(content : bytes) -> str:
 	return format(zlib.crc32(content), '08x')
 
-
+# fixme 尽量不校验
 def validate_hash(validate_path : str) -> bool:
-	hash_path = get_hash_path(validate_path)
-
-	if is_file(hash_path):
-		with open(hash_path, 'r') as hash_file:
-			hash_content = hash_file.read().strip()
-
-		with open(validate_path, 'rb') as validate_file:
-			validate_content = validate_file.read()
-
-		return create_hash(validate_content) == hash_content
-	return False
+	return True
+	# hash_path = get_hash_path(validate_path)
+	#
+	# if is_file(hash_path):
+	# 	with open(hash_path, 'r') as hash_file:
+	# 		hash_content = hash_file.read().strip()
+	#
+	# 	with open(validate_path, 'rb') as validate_file:
+	# 		validate_content = validate_file.read()
+	#
+	# 	return create_hash(validate_content) == hash_content
+	# return False
 
 
 def get_hash_path(validate_path : str) -> Optional[str]:

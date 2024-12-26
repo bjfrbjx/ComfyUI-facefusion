@@ -21,6 +21,19 @@ https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/b
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/yoloface_8n.onnx
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/retinaface_10g.onnx
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/scrfd_2.5g.onnx
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.1.0/arcface_converter_hififace.onnx
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.1.0/bisenet_resnet_18.onnx
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.1.0/hififace_unofficial_256.onnx
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.1.0/realistic_rescaler_x4.onnx
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.1.0/real_web_photo_x4.onnx
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.1.0/remacri_x4.onnx
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.1.0/siax_x4.onnx
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.1.0/styleganex_age.onnx
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.1.0/swin2_sr_x4.onnx
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.1.0/xseg_1.onnx
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.1.0/xseg_2.onnx
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/bisenet_resnet_34.onnx
+
 
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/2dfan4.hash
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/arcface_w600k_r50.hash
@@ -35,6 +48,18 @@ https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/b
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/yoloface_8n.hash
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/retinaface_10g.hash
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/scrfd_2.5g.hash
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.1.0/arcface_converter_hififace.hash
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.1.0/bisenet_resnet_18.hash
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.1.0/hififace_unofficial_256.hash
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.1.0/realistic_rescaler_x4.hash
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.1.0/real_web_photo_x4.hash
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.1.0/remacri_x4.hash
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.1.0/siax_x4.hash
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.1.0/styleganex_age.hash
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.1.0/swin2_sr_x4.hash
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.1.0/xseg_1.hash
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.1.0/xseg_2.hash
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/bisenet_resnet_34.hash
 ```
 ![models.png](.github/models.png)
 # play
@@ -56,3 +81,5 @@ face_enhance_blend:gfpgan1.4修正脸部的强度，0~100 ，0就是不启用修
 ![error_yoloface.png](.github/error_yoloface.png)
 2: 添加debug选项方便排查
 ![face_debug.png](.github/face_debug.png)
+3: 替换facefusion内容为https://github.com/facefusion/facefusion的原版，日后只要注意fixme内容即可直接替换。并且添加了3.1.0的模型，记得下载，放置位置和原来相同。
+

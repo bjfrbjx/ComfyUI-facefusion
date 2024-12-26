@@ -1,14 +1,14 @@
 from logging import Logger, basicConfig, getLogger
 from typing import Tuple
 
-from facefusion.choices import log_level_set
+import facefusion.choices
 from facefusion.common_helper import get_first, get_last
 from facefusion.typing import LogLevel, TableContents, TableHeaders
 
 
 def init(log_level : LogLevel) -> None:
 	basicConfig(format = '%(message)s')
-	get_package_logger().setLevel(log_level_set.get(log_level))
+	get_package_logger().setLevel(facefusion.choices.log_level_set.get(log_level))
 
 
 def get_package_logger() -> Logger:
@@ -50,6 +50,7 @@ def table(headers : TableHeaders, contents : TableContents) -> None:
 	package_logger.info(table_separator)
 
 	for content in contents:
+		content = [ value if value else '' for value in content ]
 		package_logger.info(table_column.format(*content))
 
 	package_logger.info(table_separator)
