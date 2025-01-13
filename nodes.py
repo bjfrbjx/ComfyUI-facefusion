@@ -137,7 +137,7 @@ def facefusion_run(source_path, target_path: str, output_path, provider, face_se
     apply_state_item('reference_frame_number', 0, )
     apply_state_item('face_mask_types', [face_mask_types], )
     apply_state_item('face_mask_padding', (0, 0, 0, 0), )
-    apply_state_item('temp_frame_format', 'png', )
+    apply_state_item('temp_frame_format', 'jpg', )
     apply_state_item('output_image_quality', 80, )
     apply_state_item('output_audio_encoder', 'aac', )
     apply_state_item('output_video_encoder', 'libx264', )
