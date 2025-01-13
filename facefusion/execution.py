@@ -63,7 +63,8 @@ def create_inference_execution_providers(execution_device_id : str, execution_pr
 
 	if 'cpu' in execution_providers:
 		inference_execution_providers.append(facefusion.choices.execution_provider_set.get('cpu'))
-
+	from facefusion import logger
+	logger.info(f"{inference_execution_providers}", __name__)
 	return inference_execution_providers
 
 
