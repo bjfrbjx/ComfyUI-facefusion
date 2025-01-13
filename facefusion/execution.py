@@ -32,11 +32,13 @@ def create_inference_execution_providers(execution_device_id : str, execution_pr
 
 	for execution_provider in execution_providers:
 		if execution_provider == 'cuda':
-			inference_execution_providers.append((facefusion.choices.execution_provider_set.get(execution_provider),
-			{
-				'device_id': execution_device_id,
-				'cudnn_conv_algo_search': 'DEFAULT' if is_geforce_16_series() else 'EXHAUSTIVE'
-			}))
+			# inference_execution_providers.append((facefusion.choices.execution_provider_set.get(execution_provider),
+			# {
+			# 	'device_id': execution_device_id,
+			# 	'cudnn_conv_algo_search': 'DEFAULT' if is_geforce_16_series() else 'EXHAUSTIVE'
+			# }))
+			# fixme 兼容老onnx
+			inference_execution_providers.append(facefusion.choices.execution_provider_set.get(execution_provider))
 		if execution_provider == 'tensorrt':
 			inference_execution_providers.append((facefusion.choices.execution_provider_set.get(execution_provider),
 			{
