@@ -50,15 +50,14 @@ def empty_torch():
 
 
 def debug(time):
-
+    from facefusion.inference_manager import INFERENCE_POOLS
     try:
-        from facefusion.inference_manager import INFERENCE_POOLS
         inf=INFERENCE_POOLS['cli']['facefusion.face_detector.yoloface.cuda']["yoloface"]
         onnxruntime_provide=inf._providers
     except:
         from traceback import format_exc
         from facefusion import logger
-        logger.error(f"{format_exc()}",__name__)
+        logger.error(f"{INFERENCE_POOLS}",__name__)
         onnxruntime_provide="cpu"
 
     return f"info:[onnx:{onnxruntime_provide}]\n[download_time:{time}]"
