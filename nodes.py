@@ -52,7 +52,7 @@ def empty_torch():
 def debug(time):
     from facefusion.inference_manager import INFERENCE_POOLS
     try:
-        inf=INFERENCE_POOLS['cli']['facefusion.face_detector.yoloface.cuda']["yoloface"]
+        inf=INFERENCE_POOLS['cli']['facefusion.processors.modules.face_swapper.cuda']["face_swapper"]
         onnxruntime_provide=inf._providers
     except:
         from traceback import format_exc
