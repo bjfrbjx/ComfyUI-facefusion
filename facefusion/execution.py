@@ -30,41 +30,51 @@ def get_available_execution_providers() -> List[ExecutionProvider]:
 def create_inference_execution_providers(execution_device_id : str, execution_providers : List[ExecutionProvider]) -> List[Any]:
 	# inference_execution_providers : List[Any] = []
 
-	# for execution_provider in execution_providers:
-	# 	if execution_provider == 'cuda':
-	# 		inference_execution_providers.append((facefusion.choices.execution_provider_set.get(execution_provider),
-	# 		{
-	# 			'device_id': execution_device_id
-	# 		}))
-	# 	if execution_provider == 'tensorrt':
-	# 		inference_execution_providers.append((facefusion.choices.execution_provider_set.get(execution_provider),
-	# 		{
-	# 			'device_id': execution_device_id,
-	# 			'trt_engine_cache_enable': True,
-	# 			'trt_engine_cache_path': '.caches',
-	# 			'trt_timing_cache_enable': True,
-	# 			'trt_timing_cache_path': '.caches',
-	# 			'trt_builder_optimization_level': 5
-	# 		}))
-	# 	if execution_provider == 'openvino':
-	# 		inference_execution_providers.append((facefusion.choices.execution_provider_set.get(execution_provider),
-	# 		{
-	# 			'device_type': 'GPU' if execution_device_id == '0' else 'GPU.' + execution_device_id,
-	# 			'precision': 'FP32'
-	# 		}))
-	# 	if execution_provider in [ 'directml', 'rocm' ]:
-	# 		inference_execution_providers.append((facefusion.choices.execution_provider_set.get(execution_provider),
-	# 		{
-	# 			'device_id': execution_device_id
-	# 		}))
-	# 	if execution_provider == 'coreml':
-	# 		inference_execution_providers.append(facefusion.choices.execution_provider_set.get(execution_provider))
+	for execution_provider in execution_providers:
+		if execution_provider == 'cuda':
+			# inference_execution_providers.append((facefusion.choices.execution_provider_set.get(execution_provider),
+			# {
+			# 	'device_id': execution_device_id,
+			# 	'cudnn_conv_algo_search': 'DEFAULT' if is_geforce_16_series() else 'EXHAUSTIVE'
+			# }))
+			# fixme 兼容老onnx
+			inference_execution_providers.append(facefusion.choices.execution_provider_set.get(execution_provider))
+		if execution_provider == 'tensorrt':
+			inference_execution_providers.append((facefusion.choices.execution_provider_set.get(execution_provider),
+			{
+				'device_id': execution_device_id,
+				'trt_engine_cache_enable': True,
+				'trt_engine_cache_path': '.caches',
+				'trt_timing_cache_enable': True,
+				'trt_timing_cache_path': '.caches',
+				'trt_builder_optimization_level': 5
+			}))
+		if execution_provider == 'openvino':
+			inference_execution_providers.append((facefusion.choices.execution_provider_set.get(execution_provider),
+			{
+				'device_type': 'GPU' if execution_device_id == '0' else 'GPU.' + execution_device_id,
+				'precision': 'FP32'
+			}))
+		if execution_provider in [ 'directml', 'rocm' ]:
+			inference_execution_providers.append((facefusion.choices.execution_provider_set.get(execution_provider),
+			{
+				'device_id': execution_device_id
+			}))
+		if execution_provider == 'coreml':
+			inference_execution_providers.append(facefusion.choices.execution_provider_set.get(execution_provider))
 
-	# if 'cpu' in execution_providers:
-	# 	inference_execution_providers.append(facefusion.choices.execution_provider_set.get('cpu'))
+	if 'cpu' in execution_providers:
+		inference_execution_providers.append(facefusion.choices.execution_provider_set.get('cpu'))
+	from facefusion import logger
+	logger.info(f"{inference_execution_providers}", __name__)
+	return inference_execution_providers
 
-	# return inference_execution_providers
-    return ['CUDAExecutionProvider','CPUExecutionProvider']
+
+def is_geforce_16_series() -> bool:
+	execution_devices = detect_static_execution_devices()
+	product_names = ('GeForce GTX 1630', 'GeForce GTX 1650', 'GeForce GTX 1660')
+
+	return any(execution_device.get('product').get('name').startswith(product_names) for execution_device in execution_devices)
 
 
 def run_nvidia_smi() -> subprocess.Popen[bytes]:
