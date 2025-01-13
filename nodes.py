@@ -56,6 +56,9 @@ def debug(time):
         inf=INFERENCE_POOLS['cli']['facefusion.face_detector.yoloface.cuda']["yoloface"]
         onnxruntime_provide=inf._providers
     except:
+        from traceback import format_exc
+        from facefusion import logger
+        logger.error(f"{format_exc()}",__name__)
         onnxruntime_provide="cpu"
 
     return f"info:[onnx:{onnxruntime_provide}]\n[download_time:{time}]"
