@@ -95,7 +95,10 @@ def forward(vision_frame : VisionFrame) -> float:
 def prepare_frame(vision_frame : VisionFrame) -> VisionFrame:
 	model_size = get_model_options().get('size')
 	model_mean = get_model_options().get('mean')
-	vision_frame = cv2.resize(vision_frame, model_size).astype(numpy.float32)
+	try:
+		vision_frame = cv2.resize(vision_frame, model_size).astype(numpy.float32)
+	except:
+		print("ddddd")
 	vision_frame -= numpy.array(model_mean).astype(numpy.float32)
 	vision_frame = numpy.expand_dims(vision_frame, axis = 0)
 	return vision_frame
