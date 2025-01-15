@@ -31,6 +31,11 @@ def get_inference_pool(model_context : str, model_sources : DownloadSet) -> Infe
 			INFERENCE_POOLS['ui'][inference_context] = INFERENCE_POOLS.get('cli').get(inference_context)
 		if not INFERENCE_POOLS.get(app_context).get(inference_context):
 			INFERENCE_POOLS[app_context][inference_context] = create_inference_pool(model_sources, state_manager.get_item('execution_device_id'), state_manager.get_item('execution_providers'))
+		# fixme 多检测算法切换
+		for key in model_sources:
+			if key not in INFERENCE_POOLS.get(app_context).get(inference_context):
+				INFERENCE_POOLS.get(app_context).get(inference_context).update(create_inference_pool(model_sources, state_manager.get_item('execution_device_id'), state_manager.get_item('execution_providers')))
+
 
 		return INFERENCE_POOLS.get(app_context).get(inference_context)
 
