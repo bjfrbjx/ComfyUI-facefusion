@@ -80,7 +80,7 @@ def create_static_model_set(download_scope : DownloadScope) -> ModelSet:
 def get_inference_pool() -> InferencePool:
 	_, model_sources = collect_model_downloads()
 	res= inference_manager.get_inference_pool(__name__, model_sources)
-	from facefusion import logger,inference_manager
+	from facefusion import logger
 	logger.info(f"{res},\n,{inference_manager.INFERENCE_POOLS}")
 	return res
 
