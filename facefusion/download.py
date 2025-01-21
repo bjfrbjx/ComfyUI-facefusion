@@ -155,7 +155,9 @@ def resolve_download_url(base_name : str, file_name : str) -> Optional[str]:
 
 def ping_download_provider(download_provider : DownloadProvider) -> bool:
 	download_provider_value = facefusion.choices.download_provider_set.get(download_provider)
-	return ping_static_url(download_provider_value.get('url'))
+	# fixme 避免无效ping
+	return None
+	#return ping_static_url(download_provider_value.get('url'))
 
 
 def resolve_download_url_by_provider(download_provider : DownloadProvider, base_name : str, file_name : str) -> Optional[str]:
