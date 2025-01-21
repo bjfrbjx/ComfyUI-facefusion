@@ -433,6 +433,7 @@ def swap_face(source_face : Face, target_face : Face, temp_vision_frame : Vision
 	center = (int(pixel_boost_vision_frames[0].shape[1] / 2), int(pixel_boost_vision_frames[0].shape[0] / 2))
 	idx=0
 	for ori_pixel_boost_vision_frame in pixel_boost_vision_frames:
+		idx+=1
 		pixel_boost_vision_frame = prepare_crop_frame(ori_pixel_boost_vision_frame)
 		swapped_vision_frame = forward_swap_face(source_face, pixel_boost_vision_frame,idx=idx)
 		swapped_vision_frame = normalize_crop_frame(swapped_vision_frame)
