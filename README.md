@@ -14,7 +14,7 @@ https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/d
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/fairface.onnx
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/fan_68_5.onnx
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/gfpgan_1.4.onnx
-https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/inswapper_128_fp16.onnx
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/inswapper_128.onnx
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/kim_vocal_2.onnx
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/open_nsfw.onnx
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/bisenet_resnet_34.onnx
@@ -41,7 +41,7 @@ https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/d
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/fairface.hash
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/fan_68_5.hash
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/gfpgan_1.4.hash
-https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/inswapper_128_fp16.hash
+https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/inswapper_128.hash
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/kim_vocal_2.hash
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/open_nsfw.hash
 https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/bisenet_resnet_34.hash
@@ -82,4 +82,6 @@ face_enhance_blend:gfpgan1.4修正脸部的强度，0~100 ，0就是不启用修
 2: 添加debug选项方便排查
 ![face_debug.png](.github/face_debug.png)
 3: 替换facefusion内容为https://github.com/facefusion/facefusion的原版，日后只要注意fixme内容即可直接替换。并且添加了3.1.0的模型，记得下载，放置位置和原来相同。
-
+4: 下面这张照片经过编码得到的数据在inswapper_128_fp16的模型计算下会越界，所以切换成32位模型。  
+下载https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/inswapper_128.onnx和https://github.com/facefusion/facefusion-assets/releases/download/models-3.0.0/inswapper_128.hash添加到原来的位置
+![error_fp16.png](.github/error_fp16.jpg)
