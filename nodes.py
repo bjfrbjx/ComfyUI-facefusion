@@ -150,7 +150,7 @@ def facefusion_run(source_path, target_path: str, output_path, provider, face_se
     apply_state_item('expression_restorer_factor', 80, )
     apply_state_item('face_editor_model', 'live_portrait', )
     apply_state_item('face_enhancer_model', 'gfpgan_1.4', )
-    apply_state_item('face_swapper_model', 'inswapper_128_fp16', )
+    apply_state_item('face_swapper_model', 'inswapper_128', )
     apply_state_item('face_swapper_pixel_boost', '128x128', )
     apply_state_item('frame_enhancer_model', 'span_kendata_x4', )
     apply_state_item('frame_enhancer_blend', 80, )
