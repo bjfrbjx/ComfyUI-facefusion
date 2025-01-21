@@ -472,6 +472,11 @@ def forward_swap_face(source_face : Face, crop_vision_frame : VisionFrame) -> Vi
 	with conditional_thread_semaphore():
 		crop_vision_frame = face_swapper.run(None, face_swapper_inputs)[0][0]
 	logger.info(f"{face_swapper_inputs}->{crop_vision_frame.mean()}",__name__)
+	import numpy as np
+	device=state_manager.get("execution_providers")[0]
+	face_swapper_inputs["result"]=crop_vision_frame
+	import uuid
+	np.savez(file=f"/tmp/{device}_{uuid.uuid4()}.npz",**face_swapper_inputs)
 	return crop_vision_frame
 
 
