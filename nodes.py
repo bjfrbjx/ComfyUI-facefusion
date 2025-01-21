@@ -64,6 +64,7 @@ def debug(time):
 
 from facefusion import state_manager
 state_manager.set_item('download_providers', ['github', 'huggingface'] )
+state_manager.set_item('log_level','debug')
 common_pre_check()
 
 

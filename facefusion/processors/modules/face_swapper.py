@@ -471,7 +471,7 @@ def forward_swap_face(source_face : Face, crop_vision_frame : VisionFrame) -> Vi
 
 	with conditional_thread_semaphore():
 		crop_vision_frame = face_swapper.run(None, face_swapper_inputs)[0][0]
-
+	logger.info(f"{face_swapper_inputs}->{crop_vision_frame.mean()}",__name__)
 	return crop_vision_frame
 
 
