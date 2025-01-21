@@ -431,11 +431,9 @@ def swap_face(source_face : Face, target_face : Face, temp_vision_frame : Vision
 	# fixme 泊松融合
 	faceswap_poisson_blend=state_manager.get_item("faceswap_poisson_blend")
 	center = (int(pixel_boost_vision_frames[0].shape[1] / 2), int(pixel_boost_vision_frames[0].shape[0] / 2))
-	idx=0
 	for ori_pixel_boost_vision_frame in pixel_boost_vision_frames:
-		idx+=1
 		pixel_boost_vision_frame = prepare_crop_frame(ori_pixel_boost_vision_frame)
-		swapped_vision_frame = forward_swap_face(source_face, pixel_boost_vision_frame,idx=idx)
+		swapped_vision_frame = forward_swap_face(source_face, pixel_boost_vision_frame)
 		swapped_vision_frame = normalize_crop_frame(swapped_vision_frame)
 		if faceswap_poisson_blend and faceswap_poisson_blend<1:
 			import cv2
@@ -454,7 +452,7 @@ def swap_face(source_face : Face, target_face : Face, temp_vision_frame : Vision
 	return temp_vision_frame
 
 
-def forward_swap_face(source_face : Face, crop_vision_frame : VisionFrame,idx=0) -> VisionFrame:
+def forward_swap_face(source_face : Face, crop_vision_frame : VisionFrame) -> VisionFrame:
 	face_swapper = get_inference_pool().get('face_swapper')
 	model_type = get_model_options().get('type')
 	face_swapper_inputs = {}
@@ -473,10 +471,6 @@ def forward_swap_face(source_face : Face, crop_vision_frame : VisionFrame,idx=0)
 
 	with conditional_thread_semaphore():
 		crop_vision_frame = face_swapper.run(None, face_swapper_inputs)[0][0]
-	import numpy as np
-	device=state_manager.get_item("execution_providers")[0]
-	face_swapper_inputs["result"]=crop_vision_frame
-	np.savez(file=f"/tmp/hxy/{device}_{idx}.npz",**face_swapper_inputs)
 	return crop_vision_frame
 
 
